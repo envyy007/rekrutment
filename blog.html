@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог | Рекрутмент с душой</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a2b4c; --primary-light: #2a3b5c;
+            --accent: #e8913a; --accent-light: #f0a855; --accent-dark: #c97b2c;
+            --bg-cream: #faf6f1; --bg-white: #ffffff;
+            --text-dark: #1a1a2e; --text-muted: #6b7280;
+            --gradient-hero: linear-gradient(135deg, #1a2b4c 0%, #2d4a7a 50%, #1a2b4c 100%);
+            --gradient-accent: linear-gradient(135deg, #e8913a, #f0a855, #e8913a);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --radius: 20px; --radius-sm: 12px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-dark); background: var(--bg-cream); overflow-x: hidden; line-height: 1.6; }
+
+        .bg-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .bg-orbs .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: floatOrb 20s ease-in-out infinite; }
+        .bg-orbs .orb:nth-child(1) { width: 600px; height: 600px; background: #e8913a; top: -200px; right: -200px; }
+        .bg-orbs .orb:nth-child(2) { width: 400px; height: 400px; background: #2d4a7a; bottom: -100px; left: -100px; animation-delay: -7s; }
+        .bg-orbs .orb:nth-child(3) { width: 300px; height: 300px; background: #d4956a; top: 50%; left: 50%; animation-delay: -14s; }
+        @keyframes floatOrb { 0%, 100% { transform: translate(0, 0) scale(1); } 25% { transform: translate(50px, -80px) scale(1.1); } 50% { transform: translate(-30px, 50px) scale(0.9); } 75% { transform: translate(80px, 30px) scale(1.05); } }
+
+        /* ===== NAV ===== */
+        .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 16px 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav.scrolled { background: rgba(26, 43, 76, 0.95); backdrop-filter: blur(20px); padding: 10px 0; box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { color: #fff; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
+        .nav-logo-icon { width: 36px; height: 36px; background: var(--gradient-accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s; }
+        .nav-links a:hover { color: #fff; } .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--accent-light); } .nav-links a.active::after { width: 100%; background: var(--accent-light); }
+        .nav-cta { background: var(--gradient-accent); color: #fff; padding: 10px 24px; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(232,145,58,0.4); }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(232,145,58,0.5); }
+        .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .nav-burger span { width: 24px; height: 2px; background: #fff; transition: all 0.3s; border-radius: 2px; }
+        @media (max-width: 768px) { .nav-links { display: none; } .nav-burger { display: flex; } }
+
+        .mobile-nav { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26,43,76,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a { color: #fff; text-decoration: none; font-size: 1.5rem; font-weight: 600; }
+        .mobile-nav-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; }
+
+        /* ===== BLOG HERO ===== */
+        .blog-hero { position: relative; padding: 160px 0 100px; background: var(--gradient-hero); overflow: hidden; text-align: center; color: #fff; }
+        .blog-hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(232,145,58,0.15), transparent 70%); border-radius: 50%; }
+        .blog-hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; position: relative; z-index: 1; }
+        .blog-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* ===== BLOG GRID ===== */
+        .blog-section { padding: 80px 0; position: relative; z-index: 1; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        .article-card { background: var(--bg-white); border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
+        .article-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(232,145,58,0.2); }
+        
+        .article-image { height: 200px; background: linear-gradient(135deg, rgba(232,145,58,0.15), rgba(26,43,76,0.1)); display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; overflow: hidden; }
+        .article-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.05)); }
+        
+        .article-content { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+        .article-meta { display: flex; gap: 12px; align-items: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; }
+        .article-tag { background: rgba(232,145,58,0.1); color: var(--accent-dark); padding: 4px 12px; border-radius: 50px; font-weight: 600; font-size: 0.75rem; }
+        .article-date { display: flex; align-items: center; gap: 4px; }
+        
+        .article-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; line-height: 1.35; color: var(--text-dark); }
+        .article-excerpt { font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 20px; flex: 1; }
+        
+        .article-link { color: var(--accent); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s; font-size: 0.95rem; }
+        .article-link:hover { gap: 10px; color: var(--accent-dark); }
+        .article-link svg { width: 16px; height: 16px; }
+
+        /* ===== FOOTER ===== */
+        .footer { background: var(--text-dark); color: rgba(255,255,255,0.5); padding: 60px 0 30px; position: relative; z-index: 1; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 24px; }
+        .footer-brand h3 { color: #fff; font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.7; }
+        .footer h4 { color: #fff; font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; }
+        .footer-links { list-style: none; } .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--accent-light); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+        .footer-bottom a { color: var(--accent-light); text-decoration: none; }
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; gap: 12px; text-align: center; } }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+     <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html#main"><div class="nav-logo">
+                Рекрутмент с душой
+            </div></a>
+            <div class="nav-links">
+                <a href="index.html#program">Программа</a>
+                <a href="index.html#pricing">Условия</a>
+                <a href="index.html#about">Об авторе</a>
+                <a href="blog.html">Статьи</a>
+            </div>
+            <a href="#form" class="nav-cta">Оставить заявку</a>
+            <div class="nav-burger" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+        <a href="blog.html" class="active">Статьи</a>
+        <a href="index.html#problems" onclick="toggleMobileNav()">Проблемы</a>
+        <a href="index.html#benefits" onclick="toggleMobileNav()">Преимущества</a>
+        <a href="index.html#program" onclick="toggleMobileNav()">Программа</a>
+        <a href="index.html#form" class="btn btn-primary" onclick="toggleMobileNav()">Оставить заявку</a>
+    </div>
+
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Блог для HR-профессионалов</h1>
+            <p>Разборы кейсов, современные методики подбора и лайфхаки для рекрутеров. Только практика, только польза.</p>
+        </div>
+    </section>
+
+    <section class="blog-section">
+        <div class="blog-grid">
+            <!-- Статья 1 -->
+            <article class="article-card reveal">
+                <div class="article-image">🔍</div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-tag">Поиск</span>
+                        <span class="article-date">📅 12 мая 2026</span>
+                    </div>
+                    <h3 class="article-title">Как искать кандидатов, когда рынок «пустой»</h3>
+                    <p class="article-excerpt">5 нестандартных каналов поиска, которые работают даже в условиях кадрового голода. Разбираем реальные кейсы закрытия сложных вакансий.</p>
+                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </article>
+
+            <!-- Статья 2 -->
+            <article class="article-card reveal reveal-delay-1">
+                <div class="article-image">🤝</div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-tag">Коммуникация</span>
+                        <span class="article-date">📅 8 мая 2026</span>
+                    </div>
+                    <h3 class="article-title">Как удерживать интерес кандидата до оффера</h3>
+                    <p class="article-excerpt">Почему 40% кандидатов отваливаются на этапе финального собеседования и как выстроить процесс коммуникации, чтобы дойти до трудоустройства.</p>
+                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </article>
+
+            <!-- Статья 3 -->
+            <article class="article-card reveal reveal-delay-2">
+                <div class="article-image">📊</div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-tag">Аналитика</span>
+                        <span class="article-date">📅 2 мая 2026</span>
+                    </div>
+                    <h3 class="article-title">Метрики рекрутера: что действительно влияет на результат</h3>
+                    <p class="article-excerpt">Time-to-fill, conversion rate, source effectiveness. Разбираем, какие KPI стоит отслеживать, а какие только создают видимость работы.</p>
+                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </article>
+
+            <!-- Статья 4 -->
+            <article class="article-card reveal">
+                <div class="article-image">💼</div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-tag">Employer Brand</span>
+                        <span class="article-date">📅 25 апреля 2026</span>
+                    </div>
+                    <h3 class="article-title">Как превратить негативные отзывы в инструмент роста</h3>
+                    <p class="article-excerpt">Что делать, когда на порталах появляются жалобы от кандидатов. Пошаговый алгоритм работы с репутацией компании-работодателя.</p>
+                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </article>
+
+            <!-- Статья 5 -->
+            <article class="article-card reveal reveal-delay-1">
+                <div class="article-image"></div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-tag">Собеседование</span>
+                        <span class="article-date">📅 18 апреля 2026</span>
+                    </div>
+                    <h3 class="article-title">Структурированное интервью: шаблоны вопросов</h3>
+                    <p class="article-excerpt">Готовые блоки вопросов для оценки hard и soft skills. Как проводить интервью так, чтобы заказчик получал только релевантных кандидатов.</p>
+                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </article>
+
+            <!-- Статья 6 -->
+            <article class="article-card reveal reveal-delay-2">
+                <div class="article-image"></div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-tag">Адаптация</span>
+                        <span class="article-date"> 10 апреля 2026</span>
+                    </div>
+                    <h3 class="article-title">Первые 14 дней: чек-лист онбординга новичка</h3>
+                    <p class="article-excerpt">Как организовать выход сотрудника так, чтобы он не ушёл через месяц. Роль рекрутера в процессе адаптации и инструменты удержания.</p>
+                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>🎯 Рекрутмент с душой</h3>
+                <p>Практический курс обучения рекрутеров, который превращает вашу команду подбора в мощный инструмент роста компании.</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#problems">Проблемы</a></li>
+                    <li><a href="index.html#benefits">Преимущества</a></li>
+                    <li><a href="index.html#program">Программа</a></li>
+                    <li><a href="index.html#pricing">Стоимость</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <ul class="footer-links">
+                    <li><a href="tel:+79224779097">+7 (922) 477 90 97</a></li>
+                    <li><a href="mailto:j_ponomareva@mail.ru">j_ponomareva@mail.ru</a></li>
+                    <li><a href="https://t.me/Ponomaryova_recruiter">Telegram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Пономарёва Юлия. Все права защищены.</span>
+            <span>Сделано с ❤️ для рекрутеров</span>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('open');
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

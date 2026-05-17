@@ -1,0 +1,2640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рекрутмент с Душой</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a2b4c;
+            --primary-light: #2a3b5c;
+            --accent: #e8913a;
+            --accent-light: #f0a855;
+            --accent-dark: #c97b2c;
+            --warm: #d4956a;
+            --bg-cream: #faf6f1;
+            --bg-white: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-muted: #6b7280;
+            --gradient-hero: linear-gradient(135deg, #1a2b4c 0%, #2d4a7a 50%, #1a2b4c 100%);
+            --gradient-accent: linear-gradient(135deg, #e8913a, #f0a855, #e8913a);
+            --gradient-warm: linear-gradient(135deg, #d4956a, #e8913a);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 40px rgba(232,145,58,0.3);
+            --radius: 20px;
+            --radius-sm: 12px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-cream);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-orbs .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: floatOrb 20s ease-in-out infinite;
+        }
+
+        .bg-orbs .orb:nth-child(1) {
+            width: 600px; height: 600px;
+            background: #e8913a;
+            top: -200px; right: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-orbs .orb:nth-child(2) {
+            width: 400px; height: 400px;
+            background: #2d4a7a;
+            bottom: -100px; left: -100px;
+            animation-delay: -7s;
+        }
+
+        .bg-orbs .orb:nth-child(3) {
+            width: 300px; height: 300px;
+            background: #d4956a;
+            top: 50%; left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -80px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.9); }
+            75% { transform: translate(80px, 30px) scale(1.05); }
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav.scrolled {
+            background: rgba(26, 43, 76, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 10px 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-inner a{
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--gradient-accent);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(232,145,58,0.4);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232,145,58,0.5);
+        }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-burger span {
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-burger { display: flex; }
+        }
+
+        /* ===== MOBILE NAV ===== */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26,43,76,0.98);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-hero);
+            overflow: hidden;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(232,145,58,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(45,74,122,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 60% 80%, rgba(232,145,58,0.08) 0%, transparent 50%);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(232,145,58,0.6);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 24px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(232,145,58,0.15);
+            border: 1px solid rgba(232,145,58,0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: var(--accent-light);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(232,145,58,0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(232,145,58,0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .hero-scroll a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTIONS GENERAL ===== */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* ===== PROBLEMS — 2x2 GRID ===== */
+        .problems {
+            padding: 120px 0;
+            background: var(--bg-white);
+        }
+
+        .problems-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .problems-header .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .problem-card {
+            background: var(--bg-cream);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .problem-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(232,145,58,0.1);
+        }
+
+        .problem-icon img{
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .problem-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .problems-cta {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(26,43,76,0.03), rgba(232,145,58,0.05));
+            border-radius: var(--radius);
+            border: 1px solid rgba(232,145,58,0.1);
+        }
+
+        .problems-cta p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .problems-cta .highlight-text {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ===== BENEFITS ===== */
+        .benefits {
+            padding: 120px 0;
+            background: var(--bg-cream);
+            position: relative;
+        }
+
+        .benefits-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .benefits-visual {
+            position: relative;
+        }
+
+        .benefits-visual-card {
+            background: var(--gradient-hero);
+            border-radius: var(--radius);
+            padding: 80px 40px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .benefits-visual-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(232,145,58,0.2), transparent 70%);
+        }
+
+        .benefits-visual-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefits-visual-card .stat {
+            font-size: 4rem;
+            font-weight: 900;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            line-height: 1;
+        }
+
+        .benefits-visual-card .stat-label {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 1;
+            margin-top: 8px;
+        }
+
+        .floating-badge {
+            position: absolute;
+            background: var(--bg-white);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 5;
+            min-width: 210px;
+        }
+
+        .floating-badge-top {
+            top: -10px;
+            right: -30px;
+            animation: floatTop 6s ease-in-out infinite;
+        }
+
+        .floating-badge-bottom {
+            top: 70px;
+            right: -30px;
+            animation: floatBottom 6s ease-in-out infinite;
+            animation-delay: -3s;
+        }
+
+        @keyframes floatTop {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes floatBottom {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .floating-badge .badge-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(232,145,58,0.15), rgba(232,145,58,0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .floating-badge .badge-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .floating-badge .badge-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .benefits-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 24px;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+            background: var(--bg-white);
+            border: 1px solid transparent;
+        }
+
+        .benefit-item:hover {
+            border-color: rgba(232,145,58,0.2);
+            box-shadow: var(--shadow-sm);
+            transform: translateX(8px);
+        }
+
+        .benefit-icon img{
+            width: 52px;
+            height: 52px;
+            padding: 10px 10px;
+            border-radius: 14px;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(232,145,58,0.3);
+        }
+
+        .benefit-text h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .benefit-text p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== PROGRAM — NEW DESIGN ===== */
+        .program {
+            padding: 120px 0;
+            background: var(--bg-white);
+        }
+
+        .program-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .program-header .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .program-card {
+            background: var(--bg-cream);
+            border-radius: var(--radius-sm);
+            padding: 28px 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            cursor: default;
+        }
+
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .program-card:hover::before {
+            opacity: 1;
+        }
+
+        .program-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(232,145,58,0.15);
+            background: var(--bg-white);
+        }
+
+        .program-card-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: rgba(26,43,76,0.06);
+            line-height: 1;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .program-card:hover .program-card-number {
+            color: rgba(232,145,58,0.2);
+        }
+
+        .program-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .program-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== FORMAT ===== */
+        .format {
+            padding: 100px 0;
+            background: var(--bg-cream);
+        }
+
+        .format-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .format-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .format-card {
+            text-align: center;
+            padding: 40px 24px;
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.4s;
+        }
+
+        .format-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(232,145,58,0.2);
+        }
+
+        .format-card-icon img{
+            width: 72px;
+            height: 72px;
+            border-radius: 15px;
+            padding: 15px 15px;
+            background: linear-gradient(135deg, rgba(26,43,76,0.08), rgba(26,43,76,0.02));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+
+        .format-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .format-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== PRICING — NO PRICES ===== */
+        .pricing {
+            padding: 120px 0;
+            background: var(--bg-white);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pricing-header .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 48px;
+            background: var(--bg-cream);
+            padding: 6px;
+            border-radius: 50px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-toggle-btn {
+            padding: 12px 32px;
+            border-radius: 50px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        .pricing-toggle-btn.active {
+            background: var(--gradient-hero);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(26,43,76,0.3);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--bg-cream);
+            border-radius: var(--radius);
+            padding: 0;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card.featured {
+            background: var(--gradient-hero);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .pricing-card:not(.featured):hover {
+            border-color: rgba(232,145,58,0.3);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(232,145,58,0.12), transparent 70%);
+        }
+
+        .pricing-popular {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-accent);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .pricing-card-body {
+            padding: 40px 32px 24px;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .pricing-card .duration {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .pricing-card.featured .duration {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .pricing-card .price-tag {
+            display: none;
+        }
+
+        .pricing-card .card-description {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .pricing-card.featured .card-description {
+            color: rgba(255,255,255,0.65);
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 0;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .pricing-card.featured .pricing-features li {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .pricing-features li .check {
+            color: #4caf50;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .pricing-card.featured .pricing-features li .check {
+            color: var(--accent-light);
+        }
+
+        .pricing-card-footer {
+            padding: 20px 32px 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-pricing {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-pricing-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-pricing-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-pricing-filled {
+            background: var(--gradient-accent);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(232,145,58,0.4);
+        }
+
+        .btn-pricing-filled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232,145,58,0.5);
+        }
+
+        /* ===== ADDITIONAL ===== */
+        .additional {
+            padding: 80px 0;
+            background: var(--bg-cream);
+        }
+
+        .additional-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .additional-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 36px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .additional-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .additional-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .additional-card h3 span img{
+            height: 40px;
+            width: 100%;
+            font-size: 1.3rem;
+        }
+
+        .additional-card ul {
+            list-style: none;
+        }
+
+        .additional-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .additional-card li:last-child {
+            border-bottom: none;
+        }
+
+        .additional-card li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 120px 0;
+            background: var(--gradient-hero);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(232,145,58,0.1), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .about-inner {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 60px;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-photo-block {
+            position: relative;
+        }
+
+        .about-photo-wrapper {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-photo {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #c8bfb5, #a89888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .about-photo-placeholder {
+            text-align: center;
+        }
+
+        .about-photo-placeholder svg {
+            width: 120px;
+            height: 120px;
+            opacity: 0.4;
+        }
+
+        .about-photo-placeholder p {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+
+        .about-photo-decoration {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 120px;
+            height: 120px;
+            border: 3px solid var(--accent);
+            border-radius: var(--radius-sm);
+            z-index: -1;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .about-stat {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .about-stat .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-stat .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-content h2 .highlight {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+        }
+
+        .about-feature:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(8px);
+        }
+
+        .about-feature-icon img{
+            width: 36px;
+            height: 36px;
+            padding: 5px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .about-feature p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+        }
+
+        .about-contact-info {
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .about-contact-info .name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .about-contact-info .role {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 16px;
+        }
+
+        .about-contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .about-contact-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .about-contact-link:hover {
+            color: var(--accent-light);
+        }
+
+        .about-contact-link svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+        /* ===== FORM SECTION ===== */
+        .form-section {
+            padding: 120px 0;
+            background: var(--bg-cream);
+            position: relative;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, var(--bg-white), var(--bg-cream));
+        }
+
+        .form-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .form-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-grid .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: var(--accent);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(0,0,0,0.08);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-cream);
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg-white);
+            box-shadow: 0 0 0 4px rgba(232,145,58,0.1);
+        }
+
+        .form-input::placeholder {
+            color: #bbb;
+        }
+
+        .form-input.date-input {
+            cursor: pointer;
+        }
+
+        .form-input.date-input::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .form-input.date-input::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
+        .date-range-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* ===== CUSTOM RADIO BUTTONS ===== */
+        .radio-group-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .radio-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .radio-option img{
+            height: 20px;
+            width: 20px;
+        }
+
+        .radio-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .radio-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 2px solid rgba(0,0,0,0.08);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            background: var(--bg-cream);
+        }
+
+        .radio-option input:checked + label {
+            border-color: var(--accent);
+            background: rgba(232, 145, 58, 0.1);
+            color: var(--accent-dark);
+            font-weight: 600;
+        }
+
+        .radio-option label:hover {
+            border-color: var(--accent);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-hero);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(26,43,76,0.4);
+        }
+
+        .form-disclaimer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .success-icon-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2rem;
+            box-shadow: 0 8px 30px rgba(76,175,80,0.3);
+        }
+
+        .success-message h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .success-message p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--text-dark);
+            color: rgba(255,255,255,0.5);
+            padding: 60px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer h4 {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== COUNTER ANIMATION ===== */
+        .counter {
+            display: inline-block;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .problems-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .benefits-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .benefits-visual-card {
+                min-height: 320px;
+                padding: 60px 30px;
+            }
+
+            .floating-badge-top {
+                right: 10px;
+                top: 20px;
+            }
+
+            .floating-badge-bottom {
+                right: 10px;
+                top: 110px;
+            }
+
+            .program-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .about-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .additional-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .format-features {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 32px 24px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .program-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#main"><div class="nav-logo">
+                Рекрутмент с душой
+            </div></a>
+            <div class="nav-links">
+                <a href="#program">Программа</a>
+                <a href="#pricing">Условия</a>
+                <a href="#about">Об авторе</a>
+                <a href="blog.html">Статьи</a>
+            </div>
+            <a href="#form" class="nav-cta">Оставить заявку</a>
+            <div class="nav-burger" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+        <a href="#problems" onclick="toggleMobileNav()">Проблемы</a>
+        <a href="#benefits" onclick="toggleMobileNav()">Преимущества</a>
+        <a href="#program" onclick="toggleMobileNav()">Программа</a>
+        <a href="#pricing" onclick="toggleMobileNav()">Стоимость</a>
+        <a href="#about" onclick="toggleMobileNav()">Об авторе</a>
+        <a href="#form" class="btn btn-primary" onclick="toggleMobileNav()">Оставить заявку</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="main">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                Набор на курс открыт
+            </div>
+            <h1>Обучение рекрутеров<br><span class="highlight">на практике</span></h1>
+            <p class="hero-subtitle">
+                Практический курс «Рекрутмент с душой» — превратите ваш отдел подбора в мощный инструмент роста компании
+            </p>
+            <div class="hero-actions">
+                <a href="#form" class="btn btn-primary">
+                    Оставить заявку
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#program" class="btn btn-secondary">
+                    Узнать программу
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#problems">
+                <span>Листайте вниз</span>
+                <div class="scroll-line"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Problems -->
+    <section class="problems" id="problems">
+        <div class="container">
+            <div class="problems-header reveal">
+                <div class="section-label">Знакомо?</div>
+                <h2 class="section-title">Вам знакома такая ситуация?</h2>
+                <p class="section-subtitle">Многие компании сталкиваются с одними и теми же проблемами в подборе персонала</p>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card reveal reveal-delay-1">
+                    <div class="problem-icon"><img src="image/nedovol.png" alt=""></div>
+                    <h3>Недовольство руководства</h3>
+                    <p>Руководители недовольны отделом подбора — нет результата, сроки срываются, качество кандидатов низкое</p>
+                </div>
+                <div class="problem-card reveal reveal-delay-2">
+                    <div class="problem-icon"><img src="image/razoch.png" alt=""></div>
+                    <h3>Нет подходящих кандидатов</h3>
+                    <p>Рекрутеры жалуются, что на рынке нет подходящих специалистов, и не знают где искать</p>
+                </div>
+                <div class="problem-card reveal reveal-delay-3">
+                    <div class="problem-icon"><img src="image/docs.png" alt=""></div>
+                    <h3>Резюме теряются</h3>
+                    <p>Кандидаты «не доходят» до собеседования, резюме теряются в потоке, процессы не систематизированы</p>
+                </div>
+                <div class="problem-card reveal reveal-delay-4">
+                    <div class="problem-icon"><img src="image/dis.png" alt=""></div>
+                    <h3>Негативные отзывы</h3>
+                    <p>В интернете появляются негативные отзывы о компании, что вредит employer brand</p>
+                </div>
+            </div>
+            <div class="problems-cta reveal">
+                <p>Важно не просто найти виновных, а <span class="highlight-text">кардинально изменить ситуацию</span> в лучшую сторону</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="benefits-inner">
+                <div class="benefits-visual reveal">
+                    <div class="benefits-visual-card">
+                        <h3>Результаты обучения</h3>
+                        <div class="stat"><span class="counter" data-target="100">0</span>+</div>
+                        <p class="stat-label">Рекрутеров прошли обучение</p>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="section-label">Преимущества</div>
+                    <h2 class="section-title">Чем могу быть вам полезна</h2>
+                    <p class="section-subtitle" style="margin-bottom: 32px;">Научу рекрутеров (даже без опыта) эффективно закрывать вакансии</p>
+                    <ul class="benefits-list">
+                        <li class="benefit-item">
+                            <div class="benefit-icon"><img src="image/lupa.png" alt=""></div>
+                            <div class="benefit-text">
+                                <h4>Качественный поиск</h4>
+                                <p>Научу проводить профессиональный поиск и первичное интервью с кандидатами</p>
+                            </div>
+                        </li>
+                        <li class="benefit-item">
+                            <div class="benefit-icon"><img src="image/rocket.png" alt=""></div>
+                            <div class="benefit-text">
+                                <h4>Мотивация кандидатов</h4>
+                                <p>Научу мотивировать кандидатов и доводить их до собеседования и трудоустройства</p>
+                            </div>
+                        </li>
+                        <li class="benefit-item">
+                            <div class="benefit-icon"><img src="image/ruki.png" alt=""></div>
+                            <div class="benefit-text">
+                                <h4>Работа с заказчиками</h4>
+                                <p>Научу находить общий язык с заказчиками и своевременно закрывать вакансии</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program — NEW DESIGN -->
+    <section class="program" id="program">
+        <div class="container">
+            <div class="program-header reveal">
+                <div class="section-label">Программа</div>
+                <h2 class="section-title">Практический курс<br>«Рекрутмент с душой»</h2>
+                <p class="section-subtitle">12 ключевых этапов, которые превратят ваших рекрутеров в профессионалов</p>
+            </div>
+            <div class="program-grid">
+                <div class="program-card reveal reveal-delay-1">
+                    <div class="program-card-number">01</div>
+                    <h4>Понятия в рекрутменте</h4>
+                    <p>Ключевые этапы подбора персонала</p>
+                </div>
+                <div class="program-card reveal reveal-delay-1">
+                    <div class="program-card-number">02</div>
+                    <h4>Основные источники поиска</h4>
+                    <p>Где и как искать лучших кандидатов</p>
+                </div>
+                <div class="program-card reveal reveal-delay-1">
+                    <div class="program-card-number">03</div>
+                    <h4>Работа в CRM-системах</h4>
+                    <p>Автоматизация процессов подбора</p>
+                </div>
+                <div class="program-card reveal reveal-delay-2">
+                    <div class="program-card-number">04</div>
+                    <h4>Сотрудничество с Заказчиком</h4>
+                    <p>Эффективная коммуникация и партнёрство</p>
+                </div>
+                <div class="program-card reveal reveal-delay-2">
+                    <div class="program-card-number">05</div>
+                    <h4>Оформление вакансий</h4>
+                    <p>Привлекающее описание и правильные каналы</p>
+                </div>
+                <div class="program-card reveal reveal-delay-2">
+                    <div class="program-card-number">06</div>
+                    <h4>Оценка кандидатов по резюме</h4>
+                    <p>Быстрая и точная фильтрация</p>
+                </div>
+                <div class="program-card reveal reveal-delay-3">
+                    <div class="program-card-number">07</div>
+                    <h4>Первичное интервью</h4>
+                    <p>Техники эффективного собеседования</p>
+                </div>
+                <div class="program-card reveal reveal-delay-3">
+                    <div class="program-card-number">08</div>
+                    <h4>Работа с мотивацией</h4>
+                    <p>Удержание интереса кандидата на всём пути</p>
+                </div>
+                <div class="program-card reveal reveal-delay-3">
+                    <div class="program-card-number">09</div>
+                    <h4>Подготовка резюме для Заказчика</h4>
+                    <p>Профессиональная подача кандидатов</p>
+                </div>
+                <div class="program-card reveal reveal-delay-4">
+                    <div class="program-card-number">10</div>
+                    <h4>Организация собеседования</h4>
+                    <p>Координация между заказчиком и кандидатом</p>
+                </div>
+                <div class="program-card reveal reveal-delay-4">
+                    <div class="program-card-number">11</div>
+                    <h4>Подготовка к выходу</h4>
+                    <p>Обеспечение успешного старта нового сотрудника</p>
+                </div>
+                <div class="program-card reveal reveal-delay-4">
+                    <div class="program-card-number">12</div>
+                    <h4>Адаптация сотрудника</h4>
+                    <p>Первые две недели — ключевой период</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Format -->
+    <section class="format">
+        <div class="container">
+            <div class="format-header reveal">
+                <div class="section-label">Формат</div>
+                <h2 class="section-title">Как проходит обучение</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">Гибкий формат, адаптированный под потребности вашей компании</p>
+            </div>
+            <div class="format-features">
+                <div class="format-card reveal reveal-delay-1">
+                    <div class="format-card-icon"><img src="image/office.png" alt=""></div>
+                    <h3>Очно или онлайн</h3>
+                    <p>Выберите удобный формат обучения для вашей команды</p>
+                </div>
+                <div class="format-card reveal reveal-delay-2">
+                    <div class="format-card-icon"><img src="image/calendar.png" alt=""></div>
+                    <h3>От 5 рабочих дней</h3>
+                    <p>Интенсивная программа с глубоким погружением</p>
+                </div>
+                <div class="format-card reveal reveal-delay-3">
+                    <div class="format-card-icon"><img src="image/portfel.png" alt=""></div>
+                    <h3>Реальные вакансии</h3>
+                    <p>Разбор реальных вакансий вашей компании</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing — NO PRICES -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="pricing-header reveal">
+                <div class="section-label">Условия</div>
+                <h2 class="section-title">Условия обучения</h2>
+                <p class="section-subtitle">Выберите подходящий формат и длительность курса</p>
+            </div>
+
+            <div class="pricing-toggle reveal">
+                <button class="pricing-toggle-btn active" onclick="switchPricing('offline')">Очное</button>
+                <button class="pricing-toggle-btn" onclick="switchPricing('online')">Онлайн</button>
+            </div>
+
+            <div class="pricing-grid" id="pricingOffline">
+                <div class="pricing-card reveal reveal-delay-1">
+                    <div class="pricing-card-body">
+                        <h3>5-дневный курс</h3>
+                        <p class="duration">40 часов обучения</p>
+                        <div class="card-description">
+                            Интенсивный курс с фокусом на базовые навыки рекрутинга и практику на реальных вакансиях вашей компании.
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> 5 дней очного обучения</li>
+                            <li><span class="check">✓</span> Практика на реальных вакансиях</li>
+                            <li><span class="check">✓</span> Рабочие материалы</li>
+                            <li><span class="check">✓</span> Аудит процессов отдела подбора</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <a href="#form" class="btn-pricing btn-pricing-outline">Узнать стоимость</a>
+                    </div>
+                </div>
+                <div class="pricing-card featured reveal reveal-delay-2">
+                    <div class="pricing-popular">Популярный</div>
+                    <div class="pricing-card-body">
+                        <h3>10-дневный курс</h3>
+                        <p class="duration">80 часов • Больше практики и закрепление навыков</p>
+                        <div class="card-description">
+                            Расширенная программа с углублённой практикой и долгосрочной поддержкой после обучения.
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> 10 дней очного обучения</li>
+                            <li><span class="check">✓</span> Закрепление навыков на практике</li>
+                            <li><span class="check">✓</span> Рабочие материалы</li>
+                            <li><span class="check">✓</span> Аудит процессов отдела подбора</li>
+                            <li><span class="check">✓</span> 5 онлайн-консультаций (3 месяца)</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-grid" id="pricingOnline" style="display:none;">
+                <div class="pricing-card reveal reveal-delay-1">
+                    <div class="pricing-card-body">
+                        <h3>5-дневный онлайн-курс</h3>
+                        <p class="duration">10 часов • Команда до 5 человек</p>
+                        <div class="card-description">
+                            Компактный онлайн-курс для небольшой команды. Каждое занятие — 2 часа практической работы.
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> 5 занятий по 2 часа</li>
+                            <li><span class="check">✓</span> До 5 участников</li>
+                            <li><span class="check">✓</span> Рабочие материалы</li>
+                            <li><span class="check">✓</span> Экспресс-аудит процессов</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <a href="#form" class="btn-pricing btn-pricing-outline">Узнать стоимость</a>
+                    </div>
+                </div>
+                <div class="pricing-card featured reveal reveal-delay-2">
+                    <div class="pricing-popular">Популярный</div>
+                    <div class="pricing-card-body">
+                        <h3>10-дневный онлайн-курс</h3>
+                        <p class="duration">20 часов • Команда до 10 человек</p>
+                        <div class="card-description">
+                            Полноценная онлайн-программа для команды. Глубокое погружение с рекомендациями по улучшению.
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> 10 занятий по 2 часа</li>
+                            <li><span class="check">✓</span> До 10 участников</li>
+                            <li><span class="check">✓</span> Рабочие материалы</li>
+                            <li><span class="check">✓</span> Экспресс-аудит процессов</li>
+                            <li><span class="check">✓</span> Рекомендации по улучшению</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional -->
+    <section class="additional">
+        <div class="container">
+            <div class="additional-grid">
+                <div class="additional-card reveal">
+                    <h3><span><img src="image/spisok.png" alt=""></span> Дополнительно (очное)</h3>
+                    <ul>
+                        <li>Аудит текущих процессов отдела подбора с отчётом и конкретными рекомендациями</li>
+                        <li>5 часовых онлайн-консультаций в течение 3-х месяцев после обучения</li>
+                        <li>Рабочие материалы: ключевая информация, формы обсуждения заявок, примеры писем</li>
+                    </ul>
+                </div>
+                <div class="additional-card reveal reveal-delay-1">
+                    <h3><span><img src="image/notebook.png" alt=""></span>  Дополнительно (онлайн)</h3>
+                    <ul>
+                        <li>Экспресс-аудит текущих процессов с рекомендациями по улучшению</li>
+                        <li>Рабочие материалы: ключевая информация, формы обсуждения заявок, примеры писем</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-inner">
+                <div class="about-photo-block reveal">
+                    <div class="about-photo-wrapper">
+                        <div class="about-photo">
+                            <div class="about-photo-placeholder">
+                                <img src="image/photo.png" alt="">
+                            </div>
+                        </div>
+                        <div class="about-photo-decoration"></div>
+                    </div>
+                    <div class="about-stats">
+                        <div class="about-stat">
+                            <div class="stat-value"><span class="counter" data-target="20">0</span>+</div>
+                            <div class="stat-label">Лет опыта</div>
+                        </div>
+                        <div class="about-stat">
+                            <div class="stat-value"><span class="counter" data-target="100">0</span>+</div>
+                            <div class="stat-label">Рекрутеров</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-content reveal">
+                    <div class="section-label" style="color: var(--accent-light);">Об авторе</div>
+                    <h2>Пономарёва <span class="highlight">Юлия</span></h2>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><img src="image/shapka.png" alt=""></div>
+                            <p>20+ лет в подборе персонала</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><img src="image/portvel.png" alt=""></div>
+                            <p>Успешная работа в консалтинге</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><img src="image/personal.png" alt=""></div>
+                            <p>Опыт обучения 100+ рекрутеров</p>
+                        </div>
+                    </div>
+                    <div class="about-contact-info">
+                        <p class="name">Пономарёва Юлия</p>
+                        <p class="role">Рекрутер, партнёр по подбору персонала</p>
+                        <div class="about-contact-links">
+                            <a href="tel:+79224779097" class="about-contact-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                +7 (922) 477 90 97
+                            </a>
+                            <a href="mailto:j_ponomareva@mail.ru" class="about-contact-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                j_ponomareva@mail.ru
+                            </a>
+                            <a href="https://t.me/Ponomaryova_recruiter" class="about-contact-link">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                                @Ponomaryova_recruiter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form -->
+    <section class="form-section" id="form">
+        <div class="container">
+            <div class="form-wrapper">
+                <div class="form-header reveal">
+                    <div class="section-label" style="justify-content: center;">Контакты</div>
+                    <h2 class="section-title">Оставьте заявку</h2>
+                    <p class="section-subtitle" style="margin: 0 auto;">Заполните форму ниже, чтобы обсудить детали обучения и получить персональное предложение</p>
+                </div>
+                
+                <div class="form-card reveal">
+                    <h3 style="text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; color: var(--text-dark);">
+                        Заявка на услугу «Обучение рекрутеров на практике»
+                    </h3>
+                    
+                    <form action="https://formspree.io/f/mlgvrpdy" method="POST" id="contactForm">
+                        <div class="form-grid">
+                            <!-- 1. Название компании -->
+                            <div class="form-group">
+                                <label>Название компании <span class="required">*</span></label>
+                                <input type="text" class="form-input" name="company_name" placeholder="ООО «Пример»" required>
+                            </div>
+
+                            <!-- 2. Сайт компании -->
+                            <div class="form-group">
+                                <label>Сайт компании</label>
+                                <input type="url" class="form-input" name="company_website" placeholder="www.example.com">
+                            </div>
+
+                            <!-- 3. Город -->
+                            <div class="form-group">
+                                <label>Город проведения <span class="required">*</span></label>
+                                <input type="text" class="form-input" name="city" placeholder="Москва" required>
+                            </div>
+
+                            <!-- 4. Численность отдела -->
+                            <div class="form-group">
+                                <label>Численность отдела подбора</label>
+                                <input type="text" class="form-input" name="dept_size" placeholder="Например: 3 человека">
+                            </div>
+
+                            <!-- 5. ФИО -->
+                            <div class="form-group full-width">
+                                <label>ФИО контактного лица <span class="required">*</span></label>
+                                <input type="text" class="form-input" name="full_name" placeholder="Иванов Иван Иванович" required>
+                            </div>
+
+                            <!-- 5. Контакты (Телефон и Почта) -->
+                            <div class="form-group">
+                                <label>Телефон <span class="required">*</span></label>
+                                <input type="tel" class="form-input" name="phone" placeholder="+7 (999) 000-00-00" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Электронная почта <span class="required">*</span></label>
+                                <input type="email" class="form-input" name="email" placeholder="ivan@company.com" required>
+                            </div>
+
+                            <!-- 6. Формат обучения (Выбор) -->
+                            <div class="form-group full-width">
+                                <span class="radio-group-label">Формат обучения</span>
+                                <div class="radio-options">
+                                    <div class="radio-option">
+                                        <input type="radio" id="format_offline" name="format" value="Очно" checked>
+                                        <label for="format_offline">Очно</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="format_online" name="format" value="Онлайн">
+                                        <label for="format_online">Онлайн</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. Продолжительность (Выбор) -->
+                            <div class="form-group full-width">
+                                <span class="radio-group-label">Продолжительность обучения</span>
+                                <div class="radio-options">
+                                    <div class="radio-option">
+                                        <input type="radio" id="dur_5" name="duration" value="5 дней" checked>
+                                        <label for="dur_5">5 рабочих дней</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="dur_10" name="duration" value="10 дней">
+                                        <label for="dur_10">10 рабочих дней</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 8. Сроки (КАЛЕНДАРЬ ОТ/ДО) -->
+                            <div class="form-group full-width">
+                                <label>Предпочтительные сроки обучения</label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div>
+                                        <input type="date" class="form-input date-input" name="date_start" id="date_start" required>
+                                        <small style="display: block; margin-top: 4px; font-size: 0.8rem; color: var(--text-muted);">Дата начала</small>
+                                    </div>
+                                    <div>
+                                        <input type="date" class="form-input date-input" name="date_end" id="date_end" required>
+                                        <small style="display: block; margin-top: 4px; font-size: 0.8rem; color: var(--text-muted);">Дата окончания</small>
+                                    </div>
+                                </div>
+                                <span class="date-range-hint">Выберите период проведения обучения</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            Отправить заявку →
+                        </button>
+                        <p class="form-disclaimer">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
+                    </form>
+                    
+                    <div class="success-message" id="successMessage">
+                        <div class="success-icon-wrap">✓</div>
+                        <h3>Заявка отправлена!</h3>
+                        <p>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Рекрутмент с Душой</h3>
+                    <p>Практический курс обучения рекрутеров, который превращает вашу команду подбора в мощный инструмент роста компании.</p>
+                </div>
+                <div>
+                    <h4>Навигация</h4>
+                    <ul class="footer-links">
+                        <li><a href="#problems">Проблемы</a></li>
+                        <li><a href="#benefits">Преимущества</a></li>
+                        <li><a href="#program">Программа</a></li>
+                        <li><a href="#pricing">Стоимость</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Контакты</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+79224779097">+7 (922) 477 90 97</a></li>
+                        <li><a href="mailto:j_ponomareva@mail.ru">j_ponomareva@mail.ru</a></li>
+                        <li><a href="https://t.me/Ponomaryova_recruiter">Telegram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Пономарёва Юлия. Все права защищены.</span>
+                <span>Сделано с ❤️ для рекрутеров</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== NAV SCROLL EFFECT =====
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== MOBILE NAV =====
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('open');
+        }
+
+        // ===== PARTICLES =====
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            particle.style.animationDelay = (Math.random() * 10) + 's';
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            particlesContainer.appendChild(particle);
+        }
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== COUNTER ANIMATION =====
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const start = performance.now();
+
+                    function updateCounter(currentTime) {
+                        const elapsed = currentTime - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        counter.textContent = Math.floor(eased * target);
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ===== PRICING TOGGLE =====
+        function switchPricing(type) {
+            const offlineGrid = document.getElementById('pricingOffline');
+            const onlineGrid = document.getElementById('pricingOnline');
+            const buttons = document.querySelectorAll('.pricing-toggle-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            if (type === 'offline') {
+                offlineGrid.style.display = 'grid';
+                onlineGrid.style.display = 'none';
+                buttons[0].classList.add('active');
+            } else {
+                offlineGrid.style.display = 'none';
+                onlineGrid.style.display = 'grid';
+                buttons[1].classList.add('active');
+            }
+
+            // Re-trigger reveal animation
+            const cards = document.querySelectorAll('#pricingOffline .pricing-card, #pricingOnline .pricing-card');
+            cards.forEach(card => {
+                card.classList.remove('visible');
+                setTimeout(() => card.classList.add('visible'), 100);
+            });
+        }
+
+        // ===== PHONE MASK =====
+        document.querySelectorAll('input[name="phone"]').forEach(input => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    if (value[0] === '7' || value[0] === '8') {
+                        value = value.substring(1);
+                    }
+                    let formatted = '+7';
+                    if (value.length > 0) formatted += ' (' + value.substring(0, 3);
+                    if (value.length >= 3) formatted += ') ' + value.substring(3, 6);
+                    if (value.length >= 6) formatted += '-' + value.substring(6, 8);
+                    if (value.length >= 8) formatted += '-' + value.substring(8, 10);
+                    e.target.value = formatted;
+                }
+            });
+        });
+
+        // ===== DATE RANGE VALIDATION =====
+        const dateStart = document.getElementById('date_start');
+        const dateEnd = document.getElementById('date_end');
+        const today = new Date().toISOString().split('T')[0];
+
+        // Set min date to today
+        dateStart.min = today;
+        dateEnd.min = today;
+
+        // Update end date min when start date changes
+        dateStart.addEventListener('change', function() {
+            if (this.value) {
+                dateEnd.min = this.value;
+                if (dateEnd.value && dateEnd.value < this.value) {
+                    dateEnd.value = this.value;
+                }
+            }
+        });
+
+        // Validate end date is not before start date
+        dateEnd.addEventListener('change', function() {
+            if (this.value && dateStart.value && this.value < dateStart.value) {
+                alert('Дата окончания не может быть раньше даты начала');
+                this.value = dateStart.value;
+            }
+        });
+
+
+        // ===== SMOOTH SCROLL FOR ALL ANCHOR LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            
+            fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+            }).then(response => {
+            if (response.ok) {
+                form.style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                form.reset();
+            } else {
+                alert('Ошибка отправки. Попробуйте позже.');
+            }
+            }).catch(() => alert('Проверьте подключение к интернету.'));
+        });
+    </script>
+</body>
+</html>
