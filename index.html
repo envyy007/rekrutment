@@ -2,11 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+        <link rel="manifest" href="site.webmanifest">
+        <meta name="theme-color" content="#1a2b4c">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
+
     <title>Рекрутмент с Душой</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -2323,41 +2326,41 @@
                             <!-- 1. Название компании -->
                             <div class="form-group">
                                 <label>Название компании <span class="required">*</span></label>
-                                <input type="text" class="form-input" name="company_name" placeholder="ООО «Пример»" required>
+                                <input type="text" class="form-input" name="Название компании" placeholder="ООО «Пример»" required>
                             </div>
 
                             <!-- 2. Сайт компании -->
                             <div class="form-group">
                                 <label>Сайт компании</label>
-                                <input type="url" class="form-input" name="company_website" placeholder="www.example.com">
+                                <input type="url" class="form-input" name="Сайт компании" placeholder="www.example.com">
                             </div>
 
                             <!-- 3. Город -->
                             <div class="form-group">
                                 <label>Город проведения <span class="required">*</span></label>
-                                <input type="text" class="form-input" name="city" placeholder="Москва" required>
+                                <input type="text" class="form-input" name="Город" placeholder="Москва" required>
                             </div>
 
                             <!-- 4. Численность отдела -->
                             <div class="form-group">
                                 <label>Численность отдела подбора</label>
-                                <input type="text" class="form-input" name="dept_size" placeholder="Например: 3 человека">
+                                <input type="text" class="form-input" name="Численность отдела подбора" placeholder="Например: 3 человека">
                             </div>
 
                             <!-- 5. ФИО -->
                             <div class="form-group full-width">
                                 <label>ФИО контактного лица <span class="required">*</span></label>
-                                <input type="text" class="form-input" name="full_name" placeholder="Иванов Иван Иванович" required>
+                                <input type="text" class="form-input" name="ФИО контактного лица" placeholder="Иванов Иван Иванович" required>
                             </div>
 
                             <!-- 5. Контакты (Телефон и Почта) -->
                             <div class="form-group">
                                 <label>Телефон <span class="required">*</span></label>
-                                <input type="tel" class="form-input" name="phone" placeholder="+7 (999) 000-00-00" required>
+                                <input type="tel" class="form-input" name="Телефон" placeholder="+7 (999) 000-00-00" required>
                             </div>
                             <div class="form-group">
                                 <label>Электронная почта <span class="required">*</span></label>
-                                <input type="email" class="form-input" name="email" placeholder="ivan@company.com" required>
+                                <input type="email" class="form-input" name="Почта" placeholder="ivan@company.com" required>
                             </div>
 
                             <!-- 6. Формат обучения (Выбор) -->
@@ -2365,11 +2368,11 @@
                                 <span class="radio-group-label">Формат обучения</span>
                                 <div class="radio-options">
                                     <div class="radio-option">
-                                        <input type="radio" id="format_offline" name="format" value="Очно" checked>
+                                        <input type="radio" id="format_offline" name="Формат" value="Очно" checked>
                                         <label for="format_offline">Очно</label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="format_online" name="format" value="Онлайн">
+                                        <input type="radio" id="format_online" name="Формат" value="Онлайн">
                                         <label for="format_online">Онлайн</label>
                                     </div>
                                 </div>
@@ -2380,11 +2383,11 @@
                                 <span class="radio-group-label">Продолжительность обучения</span>
                                 <div class="radio-options">
                                     <div class="radio-option">
-                                        <input type="radio" id="dur_5" name="duration" value="5 дней" checked>
+                                        <input type="radio" id="dur_5" name="Продолжительность обучения" value="5 дней" checked>
                                         <label for="dur_5">5 рабочих дней</label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="dur_10" name="duration" value="10 дней">
+                                        <input type="radio" id="dur_10" name="Продолжительность обучения" value="10 дней">
                                         <label for="dur_10">10 рабочих дней</label>
                                     </div>
                                 </div>
@@ -2395,12 +2398,8 @@
                                 <label>Предпочтительные сроки обучения</label>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                                     <div>
-                                        <input type="date" class="form-input date-input" name="date_start" id="date_start" required>
+                                        <input type="date" class="form-input date-input" name="Примерная дата начала обучения" id="date_start" required>
                                         <small style="display: block; margin-top: 4px; font-size: 0.8rem; color: var(--text-muted);">Дата начала</small>
-                                    </div>
-                                    <div>
-                                        <input type="date" class="form-input date-input" name="date_end" id="date_end" required>
-                                        <small style="display: block; margin-top: 4px; font-size: 0.8rem; color: var(--text-muted);">Дата окончания</small>
                                     </div>
                                 </div>
                                 <span class="date-range-hint">Выберите период проведения обучения</span>
@@ -2576,32 +2575,6 @@
             });
         });
 
-        // ===== DATE RANGE VALIDATION =====
-        const dateStart = document.getElementById('date_start');
-        const dateEnd = document.getElementById('date_end');
-        const today = new Date().toISOString().split('T')[0];
-
-        // Set min date to today
-        dateStart.min = today;
-        dateEnd.min = today;
-
-        // Update end date min when start date changes
-        dateStart.addEventListener('change', function() {
-            if (this.value) {
-                dateEnd.min = this.value;
-                if (dateEnd.value && dateEnd.value < this.value) {
-                    dateEnd.value = this.value;
-                }
-            }
-        });
-
-        // Validate end date is not before start date
-        dateEnd.addEventListener('change', function() {
-            if (this.value && dateStart.value && this.value < dateStart.value) {
-                alert('Дата окончания не может быть раньше даты начала');
-                this.value = dateStart.value;
-            }
-        });
 
 
         // ===== SMOOTH SCROLL FOR ALL ANCHOR LINKS =====
