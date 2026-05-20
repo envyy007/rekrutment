@@ -233,7 +233,7 @@
                 <a href="index.html#about">Об авторе</a>
                 <a href="blog.html">Статьи</a>
             </div>
-            <a href="#form" class="nav-cta">Оставить заявку</a>
+            <a href="index.html#form" class="nav-cta">Оставить заявку</a>
             <div class="nav-burger" onclick="toggleMobileNav()">
                 <span></span>
                 <span></span>
@@ -527,8 +527,14 @@
 
         function openArticle(id) {
             const content = document.getElementById('article-content-' + id).innerHTML;
-            modalBody.innerHTML = content;
-            modal.classList.add('active');
+            document.getElementById('modalBody').innerHTML = content;
+            
+            const modalScroll = document.querySelector('.modal-window');
+            if (modalScroll) {
+                modalScroll.scrollTop = 0;
+            }
+
+            document.getElementById('articleModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
