@@ -68,6 +68,7 @@
         .article-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(232,145,58,0.2); }
         
         .article-image { height: 200px; background: linear-gradient(135deg, rgba(232,145,58,0.15), rgba(26,43,76,0.1)); display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; overflow: hidden; }
+        .article-image img{height: 400px; }
         .article-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.05)); }
         
         .article-content { padding: 28px; flex: 1; display: flex; flex-direction: column; }
@@ -99,6 +100,117 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 43, 76, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+            padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal-window {
+            background: #fff; width: 100%; max-width: 800px; max-height: 90vh;
+            overflow-y: auto; border-radius: 20px; position: relative;
+            padding: 40px; transform: translateY(30px); transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-window { transform: translateY(0); }
+        
+        .modal-close {
+            position: absolute; top: 20px; right: 20px;
+            background: #f0f0f0; border: none; width: 40px; height: 40px;
+            border-radius: 50%; font-size: 20px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .modal-close:hover { background: #e8913a; color: #fff; }
+
+        .article-content-block { display: none; }
+        .article-content-block.active { display: block; }
+        .article-content-block h2 { font-size: 1.8rem; margin-bottom: 20px; color: #1a2b4c; }
+        .article-content-block p { margin-bottom: 15px; line-height: 1.7; color: #333; }
+        .article-content-block ul { margin-bottom: 15px; padding-left: 20px; }
+        .article-content-block li { margin-bottom: 8px; padding-left: 20px;}
+        .article-content-block img { height: 100px; width: 100%;}
+
+        /* Стили для контента внутри модального окна */
+        #modalBody h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        #modalBody h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 24px 0 12px;
+            color: var(--text-dark);
+        }
+
+        #modalBody p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        #modalBody ul {
+            margin-bottom: 20px;
+            padding-left: 24px;
+            list-style-type: disc;
+        }
+
+        #modalBody ol {
+            margin-bottom: 20px;
+            padding-left: 24px;
+            list-style-type: decimal;
+        }
+
+        #modalBody li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        #modalBody img {
+            max-width:100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: block;
+        }
+
+        #modalBody strong,
+        #modalBody b {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        #modalBody a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        #modalBody a:hover {
+            color: var(--accent-dark);
+        }
+
+        .line-highlight {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 20px 0;
+            color: var(--text-dark);
+        }
+
+        .nav-inner a{
+            text-decoration: none;
+        }
+
     </style>
 </head>
 <body>
@@ -113,7 +225,7 @@
     <nav class="nav" id="nav">
         <div class="nav-inner">
             <a href="index.html#main"><div class="nav-logo">
-                Рекрутмент с душой
+                Рекрутмент с Душой
             </div></a>
             <div class="nav-links">
                 <a href="index.html#program">Программа</a>
@@ -133,17 +245,17 @@
 
     <div class="mobile-nav" id="mobileNav">
         <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
-        <a href="blog.html" class="active">Статьи</a>
-        <a href="index.html#problems" onclick="toggleMobileNav()">Проблемы</a>
-        <a href="index.html#benefits" onclick="toggleMobileNav()">Преимущества</a>
-        <a href="index.html#program" onclick="toggleMobileNav()">Программа</a>
-        <a href="index.html#form" class="btn btn-primary" onclick="toggleMobileNav()">Оставить заявку</a>
+        <a href="#program" onclick="toggleMobileNav()">Программа</a>
+        <a href="#pricing" onclick="toggleMobileNav()">Условия</a>
+        <a href="#about" onclick="toggleMobileNav()">Об авторе</a>
+        <a href="blog.html" onclick="toggleMobileNav()">Статьи</a>
+        <a href="#form" class="btn btn-primary" onclick="toggleMobileNav()">Оставить заявку</a>
     </div>
 
     <section class="blog-hero">
         <div class="container">
             <h1>Блог для HR-профессионалов</h1>
-            <p>Разборы кейсов, современные методики подбора и лайфхаки для рекрутеров. Только практика, только польза.</p>
+            <p>Всё о подборе для начинающих рекрутеровы</p>
         </div>
     </section>
 
@@ -151,100 +263,229 @@
         <div class="blog-grid">
             <!-- Статья 1 -->
             <article class="article-card reveal">
-                <div class="article-image">🔍</div>
+                <div class="article-image"><img src="image/b1.jpg" alt=""></div>
                 <div class="article-content">
                     <div class="article-meta">
-                        <span class="article-tag">Поиск</span>
-                        <span class="article-date">📅 12 мая 2026</span>
+                        <span class="article-tag">Карьера</span>
+                        <span class="article-date">23 октября 2022</span>
                     </div>
-                    <h3 class="article-title">Как искать кандидатов, когда рынок «пустой»</h3>
-                    <p class="article-excerpt">5 нестандартных каналов поиска, которые работают даже в условиях кадрового голода. Разбираем реальные кейсы закрытия сложных вакансий.</p>
-                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <h3 class="article-title">Я Рекрутер: куда идти работать...</h3>
+                    <p class="article-excerpt">Плюсы и минусы работы в штате vs агентстве. Помогу выбрать вектор развития.</p>
+                    <a href="javascript:void(0)" onclick="openArticle(1)" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
             </article>
 
             <!-- Статья 2 -->
             <article class="article-card reveal reveal-delay-1">
-                <div class="article-image">🤝</div>
+                <div class="article-image"><img src="image/b2.jpg" alt=""></div>
                 <div class="article-content">
                     <div class="article-meta">
                         <span class="article-tag">Коммуникация</span>
-                        <span class="article-date">📅 8 мая 2026</span>
+                        <span class="article-date">13 июля 2022</span>
                     </div>
-                    <h3 class="article-title">Как удерживать интерес кандидата до оффера</h3>
-                    <p class="article-excerpt">Почему 40% кандидатов отваливаются на этапе финального собеседования и как выстроить процесс коммуникации, чтобы дойти до трудоустройства.</p>
-                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <h3 class="article-title">Я Рекрутер: мой образ идеального рекрутера</h3>
+                    <p class="article-excerpt">Почему рекрутер — лицо компании? Ключевые навыки и правила обратной связи.</p>
+                    <a href="javascript:void(0)" onclick="openArticle(2)" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
             </article>
 
             <!-- Статья 3 -->
             <article class="article-card reveal reveal-delay-2">
-                <div class="article-image">📊</div>
+                <div class="article-image"><img src="image/b3.jpg" alt=""></div>
                 <div class="article-content">
                     <div class="article-meta">
                         <span class="article-tag">Аналитика</span>
-                        <span class="article-date">📅 2 мая 2026</span>
+                        <span class="article-date">20 августа 2022</span>
                     </div>
-                    <h3 class="article-title">Метрики рекрутера: что действительно влияет на результат</h3>
-                    <p class="article-excerpt">Time-to-fill, conversion rate, source effectiveness. Разбираем, какие KPI стоит отслеживать, а какие только создают видимость работы.</p>
-                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <h3 class="article-title">Я Рекрутер: О чём расскажет резюме</h3>
+                    <p class="article-excerpt">Как за 2 минуты считать «скрытые сигналы»: ошибки, объём, фото и формулировки.</p>
+                    <a href="javascript:void(0)" onclick="openArticle(3)" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
             </article>
 
             <!-- Статья 4 -->
             <article class="article-card reveal">
-                <div class="article-image">💼</div>
+                <div class="article-image"><img src="image/b4.jpg" alt=""></div>
                 <div class="article-content">
                     <div class="article-meta">
-                        <span class="article-tag">Employer Brand</span>
-                        <span class="article-date">📅 25 апреля 2026</span>
+                        <span class="article-tag">Заказчик</span>
+                        <span class="article-date">1 августа 2022</span>
                     </div>
-                    <h3 class="article-title">Как превратить негативные отзывы в инструмент роста</h3>
-                    <p class="article-excerpt">Что делать, когда на порталах появляются жалобы от кандидатов. Пошаговый алгоритм работы с репутацией компании-работодателя.</p>
-                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <h3 class="article-title">Я Рекрутер: обсуждаем заявку на вакансию с Заказчиком</h3>
+                    <p class="article-excerpt">Пошаговый чек-лист снятия заявки: история, бюджет, требования и этапы.</p>
+                    <a href="javascript:void(0)" onclick="openArticle(4)" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
             </article>
 
             <!-- Статья 5 -->
             <article class="article-card reveal reveal-delay-1">
-                <div class="article-image"></div>
+                <div class="article-image"><img src="image/b5.jpg" alt=""></div>
                 <div class="article-content">
                     <div class="article-meta">
-                        <span class="article-tag">Собеседование</span>
-                        <span class="article-date">📅 18 апреля 2026</span>
+                        <span class="article-tag">Оффер</span>
+                        <span class="article-date">4 марта 2023</span>
                     </div>
-                    <h3 class="article-title">Структурированное интервью: шаблоны вопросов</h3>
-                    <p class="article-excerpt">Готовые блоки вопросов для оценки hard и soft skills. Как проводить интервью так, чтобы заказчик получал только релевантных кандидатов.</p>
-                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <h3 class="article-title">Я Рекрутер: Контроффер</h3>
+                    <p class="article-excerpt">Что делать при встречном предложении? Как помочь кандидату принять решение.</p>
+                    <a href="javascript:void(0)" onclick="openArticle(5)" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
             </article>
 
-            <!-- Статья 6 -->
-            <article class="article-card reveal reveal-delay-2">
-                <div class="article-image"></div>
-                <div class="article-content">
-                    <div class="article-meta">
-                        <span class="article-tag">Адаптация</span>
-                        <span class="article-date"> 10 апреля 2026</span>
-                    </div>
-                    <h3 class="article-title">Первые 14 дней: чек-лист онбординга новичка</h3>
-                    <p class="article-excerpt">Как организовать выход сотрудника так, чтобы он не ушёл через месяц. Роль рекрутера в процессе адаптации и инструменты удержания.</p>
-                    <a href="#" class="article-link">Читать далее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                </div>
-            </article>
         </div>
     </section>
 
+    <!-- ===== РАЗМЕТКА МОДАЛЬНОГО ОКНА ===== -->
+    <div class="modal-overlay" id="articleModal">
+        <div class="modal-window">
+            <button class="modal-close" onclick="closeArticle()">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        
+        <div id="article-content-1" class="article-content-block">
+            <h2>Я Рекрутер: куда идти работать...</h2>
+            <p>Почти всю свою профессиональную жизнь я работала со стороны подрядчика и занималась подбором персонала для компаний индустриального сектора. </p>
+            <p>Коллеги, которые уходили к Заказчикам - в комментариях о новой работе соблюдали нейтралитет. Видимо руководствуясь правилом - о действующем работодателе говорить либо хорошо, либо ничего.</p>
+            <p>Для тех, кто сейчас на перепутье - расскажу о плюсах и минусах работы со стороны Заказчика и Подрядчика.</p>
+            <img src="image/blog1.jpg" alt="">
+            <H3>ЗАКАЗЧИК (работа в штате компании)</H3>
+            <h3>Плюсы:</h3>
+            <ul>
+                <li>Стабильная заработная плата</li>
+                <li>"Доступность" внутреннего заказчика - оперативное решение вопросов</li>
+                <li>Объём работы есть всегда</li>
+            </ul>
+            <h3>Минусы:</h3>
+            <ul>
+                <li>У внутренних HR-ов моменты эмоционального выгорания происходят чаще, чем у внешних рекрутов. Подразумеваю, что это связано с исторически сложившимся отношением к отделу персонала, как к "обслуживающему" подразделению в компании. Без отдела подбора работа в компании может остановиться. Это многие осознают, но всё равно продолжают недооценивать заслуги рекрутеров. Поругать, как говорится, все горазды - похвалил бы кто)</li>
+                <li>Нет возможности влиять на свой уровень дохода</li>
+                <li>Нет разнообразия в вакансиях (особенно в компаниях с численностью до 1.000 человек)</li>
+            </ul>
+            <H3>ПОДРЯДЧИК (кадровое агентство/рекрутер-фрилансер)</H3>
+            <h3>Плюсы:</h3>
+            <ul>
+                <li>Влияние на свой доход: например, средний уровень дохода усидчивого рекрутера в крупном КА - 150.000 рублей и это далеко не предел. Сделаем примерный расчёт гонорара исходя из средней стоимости подбора - 15 % от годового дохода. Сразу оговорюсь - цифры ориентировочные и очень усреднённые.</li>
+            </ul>
+            <p>Если рекрутер трудоустроил кандидата с ежемесячной зарплатой в 200.000 рублей, то гонорар КА(кадрового агенства) составит 360.000 рублей.</p>
+            <p>Гонорар самого рекрутера будет зависеть от бонусной шкалы агентства и количества закрытых им в месяц вакансий. Предположу, что при таком гонораре в КА - сам рекрутер получит примерно 20 % от этой суммы, а это 72.000 рублей. А закрыв 2 или 3 позиции - рекрутер приумножит доход в 2-3 раза.</p>
+            <p>А если это фрилансер-самозанятый - он получит всю сумму минус 6 %.</p>
+            <ul>
+                <li>Возможность развивать свой кругозор в части знания рынка труда не только в своей отрасли.</li>
+            </ul>
+            <p>Я, например, хорошо ориентируюсь не только в горнодобывающих компаниях, с которыми работаю последние 4 года, но и в нефтегазодобывающей и химической отраслях.</p>
+            <h3>Минусы:</h3>
+            <ul>
+                <li>Отсутствие стабильного объёма работы. Хотя это тоже относительно.</li>
+            </ul>
+            <p>Зарекомендовавший себя рекрутер всегда будет при деле. И не важно - фрилансер он или сотрудник кадрового агентства. Именно поэтому важно помнить, что <b>репутация рекрутера</b>, как та самая пресловутая зачётка - после определённого периода времени (опыта) - начинает работать на тебя.</p>
+            <ul>
+                <li>Нет доступа к "внутренней кухне" заказчика - а это в свою очередь мешает быстро и точно попасть в профиль кандидата. Ведь кандидат может полностью соответствовать требованиям, но личностно абсолютно не вписаться в коллектив. Однако и этот вопрос решаем - надо просто качественно "снимать" заявку.</li>
+            </ul>
+            <p>Если Вы как раз решаете, в какую сторону Вам развернуть, а может и начать свою карьеру в качестве рекрутера - оставляйте заявку. Постараюсь ответить на ваши вопросы.</p>
+        
+        </div>
+
+        <div id="article-content-2" class="article-content-block">
+            <h2>Я Рекрутер: мой образ идеального рекрутера</h2>
+            <p>А знаете дорогие работодатели, почему рекрутера надо холить, лелеять и конечно достойно оплачивать его труд?</p>
+            <p>Потому что никакой бренд работодателя не сработает, если «на входе» в компанию, кандидата встретит вымотанный и побитый жизнью/плохим отношением рекрутер.</p>
+            <p>Есть такое выражение "Приходят в компанию, а уходят от людей". С рекрутером обратная история: о компании судят по тому, какие люди там работают. А первым их встречает рекрутер.</p>
+            <p>Поэтому настолько важна его роль - и это не преувеличение.</p>
+            <img src="image/blog2.jpg" alt="">
+            <p>Попробую обрисовать мой образ <b>идеального рекрутера:</b></p>
+            <ul>
+                <li>Это вежливый, понимающий и деликатный человек; он соблюдает нейтралитет и старается учесть интересы и чувства каждого участника процесса подбора. И, что очень важно, этот человек самомотивирован на работу в своей компании. Только тогда он сможет успешно "продавать" вакансии кандидатам, искренне и уверенно о них рассказывая.</li>
+                <li>Он/она отлично владеет информацией о вакансии. Чтобы было именно так, рекрутер должен максимально скрупулёзно «снимать» заявку на вакансию – выяснять детали, ключевые требования, проверочные вопросы. От этого выиграют все участники процесса. Помните фразу из мультика – <b>«Лучше день потерять, потом за 5 минут долететь»</b> Зная все нюансы – рекрутер более точно проведёт предварительный отбор кандидатов и, в последующем, сэкономит и своё время, и время заказчика.</li>
+                <li>Несмотря на свою занятость – рекрутер обязательно даёт обратную связь кандидатам, особенно тем, с кем заказчики не готовы продолжать диалог. Большинство из нас побывали в роли кандидата без обратной связи – это очень неприятно, это крайне демотивирует, снижает самооценку даже тем, кто этот факт отрицает)</li>
+
+            </ul>
+            <p class="line-highlight"><em>Дорогие юные и опытные рекрутеры, пожалуйста, не оставляйте кандидатов без обратной связи.</em></p>
+            <p>Даже если Вам не озвучили причин отказа – кандидату можно сказать:</p>
+            <p><b>«К сожалению, коллеги приняли решение в пользу другого кандидата. Спасибо Вам за готовность к сотрудничеству! Удачи Вам в поиске работы!»</b></p>
+            <p>Если же у Вас «завал» и Вы точно знаете, что времени отказать всем у Вас точно не будет – сразу предупредите об этом кандидата. Так и скажите:</p>
+            <p><b>«У нас большой поток кандидатов. Пожалуйста, перезвоните мне сами через неделю и я поделюсь обратной связью».</b></p>
+            <p>Ну вот как-то так) Если вдруг Вы решите спросить меня - соответствует ли моё профессиональное поведение перечисленным выше критериям?</p>
+            <p>Не всегда, но я к этому стремлюсь!)</p>
+
+        </div>
+
+        <div id="article-content-3" class="article-content-block">
+            <h2>Я Рекрутер: О чём расскажет резюме</h2>
+            <p>Сразу оговорюсь, что оценка человека по резюме - процедура крайне субъективная.</p>
+            <p>Начнём с того, что возможно соискатель не сам его составлял.</p>
+            <p>Были такие примеры и до сих пор повсеместно встречаются, когда резюме за кандидата составляет другой человек, например супруга или мама.</p>
+            <img src="image/blog3.png" alt="">
+            <p>И всё же, когда время ограничено, а откликов действительно много - можно делать выводы по следующим признакам:</p>
+            <ol>
+                <li>Большое количество ошибок в резюме (10+) - кандидат скорее всего, в принципе, невнимательный. А если это Бухгалтер - делайте выводы...</li>
+                <li>Если в ожидаемой позиции указано сразу несколько разноплановых должностей - скорее всего кандидат до сих пор не определился кто он "по жизни". Состоявшиеся профессионалы точно знают какая должность им интересна.</li>
+                <li>Резюме на 7+ страниц и в обязанностях по каждому месту работы 25+ строчек, огромное сопроводительное письмо, где кандидат перечисляет все свои регалии, фактически дублирую информацию из резюме. Если всё таки хотите позвонить этому человеку - настраивайтесь на то, что он "съест" как минимум 30 минут вашего драгоценного времени, долго рассказывая о том, что он ещё умеет, помимо указанного в резюме.</li>
+                <li>В обязанности скопирована должностная инструкция: перед вами, скорее всего, резюме формалиста. Не ждите от него творческих инициатив.</li>
+                <li>Если в разделе "О себе" кандидат перечисляет большое количество увлечений - скорее всего он рассчитывает на нормированный график работы. Должно же у него быть свободное время на хобби)</li>
+                <li>Фотографии часто говорят сами за себя. Я сейчас не имею ввиду такие безобидные варианты, как фото на природе, в компании друзей, семейные фото с детьми в резюме - это даже мило)))</li>
+            </ol>
+            <p>Но если, например, на вакансию Юриста претендует молодой человек и его фото в резюме крайне неформального вида - я точно позвоню ему в последнюю очередь.</p>
+            <p>Ну и пример из жизни: как-то моя коллега искала маркетолога и нашла... Это резюме точно выделялось среди остальных - кандидат на фото был без одежды.</p>
+            <p>Кто не верит - может проверить. Маркетолог был с Дальнего Востока)</p>
+        </div>
+
+        <div id="article-content-4" class="article-content-block">
+            <h2>Я Рекрутер: обсуждаем заявку на вакансию с Заказчиком</h2>
+            <p>Наверное слышали фразу из мультика "Крылья, ноги и хвосты": "лучше день потерять, потом за 5 минут долететь!"</p>
+            <p>Идея этой фразы отлично ложится и на процесс рекрутмента.</p>
+            <p>Некачественно снятая заявка - приведёт к тому, что поиск по вакансии затянется на веки вечные) Как минимум, есть опасность, не уложиться в срок.</p>
+            <p>Даю краткую пошаговую инструкцию - как правильно обсудить запрос:</p>
+            <ol>
+                <li><b>Выясните историю возникновения вакансии:</b> новая/замена действующего сотрудника/декретная.</li>
+                <li><b>Уточните требования к опыту:</b> ключевые обязательные (знания, без которых не обойтись) и дополнительные неформальные требования.</li>
+            
+            <p>А вот пример, про неформальные требования, о которых я своевременно не спросила...</p>
+            <p class="line-highlight"><em>Это была 2-я вакансия в моей профессиональной карьере (на заре юности, так сказать:))<br><br>
+                Запрос от заказчика: нужен офис-менеджер с опытом в продажах. Что может быть проще? Я ринулась в бой: нашла 4-х идеальных кандидатов - девушек. Но, что-то пошло не так: после каждого собеседования получаю отказ. В итоге, клиент закрывает вакансию своими силами и берёт на эту должность молодого человека. И тут выясняется (заказчик сам мне об этом рассказал, я бы наверное не догадалась): супруга-соучредитель, которая старше его на 20 лет - категорически "забраковывала" всех кандидаток. Причина проста - ревность)</em></p>
+                <li><b>Обсудите заработную плату:</b> границы "min - max"; из чего формируется (оклад/премия/бонус); как сотрудник может повлиять на её увеличение; какие KPI нужно выполнить для получения премии/бонуса.</li>
+                <li><b>Зафиксируйте этапы принятия решения:</b> важно выяснить количество этапов оценки; если ЛПР (лицо, принимающее решение) больше 3-х человек - лучше "на берегу" предупредить кандидата</li>
+                <li><b>Определите источники поиска / компании-доноры:</b> иногда наш Заказчик прекрасно знает, какие люди и из каких компаний ему нужны. Не стоит тратить время на изобретение велосипеда - просто спросите!)</li>
+            </ol>
+
+            <p>Секрет успеха - в сотрудничестве Рекрутера и Заказчика.</p>
+            <p>Так и напрашиваются лозунги:</p>
+            <ul>
+                <li>Рекрутер - дружи с Заказчиком!</li>
+                <li>Заказчик - цени дружбу с Рекрутером!</li>
+            </ul>
+            <p>Обе стороны от этого союза только выиграют)</p>
+            <p>А ещё, хочу добавить: если есть возможность лично встретиться с Заказчиком - не поленитесь, поднимитесь на этаж, пройдите 100 метров, отделяющие Вас от коллеги, посмотрите друг другу в глаза и чудесным образом ваша цель станет общей и станет ближе)</p>
+            <p>Удачи Вам дорогие рекрутеры!</p>
+        </div>
+
+        <div id="article-content-5" class="article-content-block">
+            <h2>Я Рекрутер: Контроффер</h2>
+            <p>Простыми словами: Вам сделали предложение о работе, а ваш нынешний работодатель - пытается вас удержать и предлагает лучшие условия. Стоит отметить, что контрофферить может и параллельно рассматривающий кандидата работодатель.</p>
+            <p>И тут хочу передать привет одной девушке, которая в аналогичной ситуации изрядно попортила всем нервы)</p>
+            <p>Здесь я не буду рассуждать на тему того, как предотвратить ситуацию отказа кандидата от оффера или как разоблачить контроффериста. Кстати мне чаще встречались контрофферистки)</p>
+            <p>Поделюсь своим взглядом на этот вопрос:</p>
+            <p>Ещё 10 лет назад я бы на 200% выложилась, чтобы кандидат принял оффер и вышел на работу.</p>
+            <p>Но, здесь и сейчас, я считаю, что каждый человек должен сам принять решение, которое может стать для него судьбоносным.</p>
+            <p>Вопрос не только в заработной плате и уровне должности. Стоит ещё прислушаться к своему душевному состоянию и при этом не перепутать ощущение отторжения от чувства волнения перед сменой жизненного пути.</p>
+            <p>Конечно, если слышите такие слова как "не знаю", "не могу решится", "нужно подумать", "надо посоветоваться с семьёй", тогда воспринимайте это как сигнал о помощи и помогите кандидату принять решение.</p>
+            <p>P.S. Дорогие контрофферисты помните - "За двумя зайцами погонишься - ни одного не поймаешь"!</p>
+        </div>
+
+    </div>
+
+   
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <h3>🎯 Рекрутмент с душой</h3>
+                <h3>Рекрутмент с Душой</h3>
                 <p>Практический курс обучения рекрутеров, который превращает вашу команду подбора в мощный инструмент роста компании.</p>
             </div>
             <div>
                 <h4>Навигация</h4>
                 <ul class="footer-links">
-                    <li><a href="index.html#problems">Проблемы</a></li>
+                    <li><a href="index.html#problems">Задачи</a></li>
                     <li><a href="index.html#benefits">Преимущества</a></li>
                     <li><a href="index.html#program">Программа</a></li>
                     <li><a href="index.html#pricing">Стоимость</a></li>
@@ -280,6 +521,25 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         revealElements.forEach(el => revealObserver.observe(el));
+
+        const modal = document.getElementById('articleModal');
+        const modalBody = document.getElementById('modalBody');
+
+        function openArticle(id) {
+            const content = document.getElementById('article-content-' + id).innerHTML;
+            modalBody.innerHTML = content;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticle() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) { closeArticle(); }
+        });
     </script>
 </body>
 </html>

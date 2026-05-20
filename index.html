@@ -1937,7 +1937,7 @@
             </div>
             <h1>Обучение рекрутеров<br><span class="highlight">на практике</span></h1>
             <p class="hero-subtitle">
-                Практический курс «Рекрутмент с Душой» — превратите ваш отдел подбора в мощный инструмент роста компании
+                Практический курс «Рекрутмент с Душой» — превратите ваш отдел подбора в эффективный инструмент роста компании
             </p>
             <div class="hero-actions">
                 <a href="#form" class="btn btn-primary">
@@ -1984,7 +1984,7 @@
                 <div class="problem-card reveal reveal-delay-4">
                     <div class="problem-icon"><img src="image/dis.png" alt=""></div>
                     <h3>Негативные отзывы</h3>
-                    <p>В интернете появляются негативные отзывы о компании, что вредит employer brand</p>
+                    <p>В интернете появляются негативные отзывы о компании</p>
                 </div>
             </div>
             <div class="problems-cta reveal">
@@ -2152,7 +2152,8 @@
             </div>
 
             <div class="pricing-grid" id="pricingOffline">
-                <div class="pricing-card reveal reveal-delay-1">
+                <div class="pricing-card featured reveal reveal-delay-1">
+                    <div class="pricing-popular">Популярный</div>
                     <div class="pricing-card-body">
                         <h3>5-дневный курс</h3>
                         <p class="duration">40 часов обучения</p>
@@ -2167,11 +2168,10 @@
                         </ul>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-outline">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
                     </div>
                 </div>
-                <div class="pricing-card featured reveal reveal-delay-2">
-                    <div class="pricing-popular">Популярный</div>
+                <div class="pricing-card reveal reveal-delay-1">
                     <div class="pricing-card-body">
                         <h3>10-дневный курс</h3>
                         <p class="duration">80 часов • Больше практики и закрепление навыков</p>
@@ -2187,13 +2187,14 @@
                         </ul>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-outline ">Узнать стоимость</a>
                     </div>
                 </div>
             </div>
 
             <div class="pricing-grid" id="pricingOnline" style="display:none;">
-                <div class="pricing-card reveal reveal-delay-1">
+                <div class="pricing-card featured reveal reveal-delay-1">
+                    <div class="pricing-popular">Популярный</div>
                     <div class="pricing-card-body">
                         <h3>5-дневный онлайн-курс</h3>
                         <p class="duration">10 часов • Команда до 5 человек</p>
@@ -2208,11 +2209,10 @@
                         </ul>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-outline">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
                     </div>
                 </div>
-                <div class="pricing-card featured reveal reveal-delay-2">
-                    <div class="pricing-popular">Популярный</div>
+                <div class="pricing-card reveal reveal-delay-2">
                     <div class="pricing-card-body">
                         <h3>10-дневный онлайн-курс</h3>
                         <p class="duration">20 часов • Команда до 10 человек</p>
@@ -2228,7 +2228,7 @@
                         </ul>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-outline">Узнать стоимость</a>
                     </div>
                 </div>
             </div>
@@ -2411,15 +2411,24 @@
 
                             <!-- 8. Сроки (КАЛЕНДАРЬ ОТ/ДО) -->
                             <div class="form-group full-width">
-                                <label>Предпочтительные сроки обучения</label>
+                                <label>Предпочтительная дата начала обучения</label>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                                     <div>
                                         <input type="date" class="form-input date-input" name="Примерная дата начала обучения" id="date_start" required>
-                                        <small style="display: block; margin-top: 4px; font-size: 0.8rem; color: var(--text-muted);">Дата начала</small>
                                     </div>
                                 </div>
-                                <span class="date-range-hint">Выберите период проведения обучения</span>
+                                <span class="date-range-hint">Выберите дату начала обучения</span>
                             </div>
+
+                            <div class="form-group full-width">
+                                <label>Дополнительные комментарии</label>
+                                <div >
+                                    <div>
+                                        <input type="text" class="form-input" name="Доп. комментарии" id="comms" placeholder="Ваши комментарии" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
 
                         <button type="submit" class="btn-submit">
@@ -2449,7 +2458,7 @@
                 <div>
                     <h4>Навигация</h4>
                     <ul class="footer-links">
-                        <li><a href="#problems">Проблемы</a></li>
+                        <li><a href="#problems">Задачи</a></li>
                         <li><a href="#benefits">Преимущества</a></li>
                         <li><a href="#program">Программа</a></li>
                         <li><a href="#pricing">Стоимость</a></li>
