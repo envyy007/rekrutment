@@ -1930,7 +1930,7 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/109674750" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    
+
     <!-- Background Orbs -->
     <div class="bg-orbs">
         <div class="orb"></div>
@@ -2674,6 +2674,10 @@
             headers: { 'Accept': 'application/json' }
             }).then(response => {
             if (response.ok) {
+
+                ym(109674750,'reachGoal','form_success')
+                ym(109674750,'reachGoal','click_apply')
+                
                 form.style.display = 'none';
                 document.getElementById('successMessage').classList.add('show');
                 form.reset();
