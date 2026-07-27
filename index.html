@@ -1904,6 +1904,14 @@
             margin-top: 32px;
             text-align: center;
         }
+
+        .download-section p {
+            font-size: 14px;
+            font-weight: 300;
+            margin-top: 15px;
+            margin-bottom: -25px;
+        }
+
         .btn-download {
             display: inline-flex;
             align-items: center;
@@ -2088,6 +2096,21 @@
 .clickable-stat:hover {
     color: var(--accent);
     border-bottom-color: var(--accent);
+}
+
+.priceprice {
+    font-weight: 600;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: -18px;
+}
+
+.pr {
+    color: #d1d5dd;
+}
+
+.pri {
+    color: #585b61;
 }
     </style>
 </head>
@@ -2340,7 +2363,7 @@
                 </div>
                 <div class="format-card reveal reveal-delay-2">
                     <div class="format-card-icon"><img src="image/calendar.png" alt=""></div>
-                    <h3>От 5 рабочих дней</h3>
+                    <h3>От 5-ти рабочих дней</h3>
                     <p>Интенсивная программа с глубоким погружением</p>
                 </div>
                 <div class="format-card reveal reveal-delay-3">
@@ -2382,9 +2405,10 @@
                             <li><span class="check">✓</span> Аудит процессов отдела подбора</li>
                             <li><span class="check">✓</span> 5 онлайн-консультаций (3 месяца)</li>
                         </ul>
+                        <div class="priceprice">Стоимость обучения: 320 000 руб <br> <div class="pr">+ расходы на проезд и проживание</div></div>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Оставить заявку</a>
                     </div>
                 </div>
                 <div class="pricing-card reveal reveal-delay-1">
@@ -2401,9 +2425,10 @@
                             <li><span class="check">✓</span> Аудит процессов отдела подбора</li>
                             <li><span class="check">✓</span> 5 онлайн-консультаций (3 месяца)</li>
                         </ul>
+                        <div class="priceprice">Стоимость обучения: 480 000 руб <br> <div class="pri">+ расходы на проезд и проживание</div></div>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-outline ">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-outline ">Оставить заявку</a>
                     </div>
                 </div>
             </div>
@@ -2423,9 +2448,10 @@
                             <li><span class="check">✓</span> Рабочие материалы</li>
                             <li><span class="check">✓</span> Экспресс-аудит процессов</li>
                         </ul>
+                        <div class="priceprice">Стоимость обучения: 80 000 руб <br> <div class="pr">+ расходы на проезд и проживание</div></div>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-filled">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Оставить заявку</a>
                     </div>
                 </div>
                 <div class="pricing-card reveal reveal-delay-2">
@@ -2441,9 +2467,10 @@
                             <li><span class="check">✓</span> Рабочие материалы</li>
                             <li><span class="check">✓</span> Экспресс-аудит процессов</li>
                         </ul>
+                        <div class="priceprice">Стоимость обучения: 120 000 руб <br> <div class="pri">+ расходы на проезд и проживание</div></div>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-outline">Узнать стоимость</a>
+                        <a href="#form" class="btn-pricing btn-pricing-outline">Оставить заявку</a>
                     </div>
                 </div>
             </div>
@@ -2472,10 +2499,11 @@
             </div>
 
             <div class="download-section">
-                <a href="usloviya.pdf" download class="btn-download">
+                <a href="usloviya.pdf" target="_blank" download class="btn-download">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Ознакомиться с предварительными условиями
                 </a>
+                <p>Итоговая стоимость обучения формируется <br>с учётом выбранного формата и региона проведения</p>
             </div>
         </div>
     </section>
@@ -2521,22 +2549,34 @@
                             <div class="about-feature-icon"><img src="image/personal.png" alt=""></div>
                             <p>Спикер HR-конференций Human и Дедлайн</p>
                         </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><img src="image/mounts.png" alt=""></div>
+                            <p>Партнёр проекта КРДВ  - Жизнь и работа на дальнем Востоке и в Арктике</p>
+                        </div>
                     </div>
                     <div class="about-contact-info">
                         <p class="name">Пономарёва Юлия</p>
                         <p class="role">Рекрутер, партнёр по подбору персонала</p>
                         <div class="about-contact-links">
-                            <a href="tel:+79224779097" class="about-contact-link">
+                            <a href="tel:+79224779097" target="_blank" class="about-contact-link">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                 +7 (922) 477 90 97
                             </a>
-                            <a href="mailto:j_ponomareva@mail.ru" class="about-contact-link">
+                            <a href="mailto:j_ponomareva@mail.ru" target="_blank" class="about-contact-link">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                                 j_ponomareva@mail.ru
                             </a>
-                            <a href="https://t.me/Ponomaryova_recruiter" class="about-contact-link">
+                            <a href="https://t.me/Ponomaryova_recruiter" target="_blank" class="about-contact-link">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                                 @Ponomaryova_recruiter
+                            </a>
+                            <a href="https://vk.ru/away.php?to=https%3A%2F%2Fmax.ru%2Fu%2Ff9LHodD0cOJVwu5nA7kLP9GSy8gLEeSRO3KoKh91wDkoUABkcu5AgBxB_V4&utf=1" target="_blank" class="about-contact-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80" fill="currentColor">
+  <text x="0" y="68" font-family="'Arial Black', 'Impact', sans-serif" font-size="72" font-weight="900" letter-spacing="6">
+    MAX
+  </text>
+</svg>
+                                Я в MAXе
                             </a>
                         </div>
                     </div>
