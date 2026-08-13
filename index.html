@@ -1013,7 +1013,7 @@
             box-shadow: 0 4px 15px rgba(26,43,76,0.3);
         }
 
-        .pricing-grid {
+       .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
@@ -1026,6 +1026,7 @@
             border-radius: var(--radius);
             padding: 0;
             border: 2px solid transparent;
+            border-color: var(--accent);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -1044,6 +1045,12 @@
             border-color: rgba(232,145,58,0.3);
             transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow), 0 20px 60px rgba(0,0,0,0.15);
+            border-color: var(--accent);
         }
 
         .pricing-card.featured::before {
@@ -2112,6 +2119,7 @@
 .pri {
     color: #585b61;
 }
+
     </style>
 </head>
 <body>
@@ -2375,13 +2383,13 @@
         </div>
     </section>
 
-    <!-- Pricing — NO PRICES -->
+    <!-- Pricing -->
     <section class="pricing" id="pricing">
         <div class="container">
             <div class="pricing-header reveal">
                 <div class="section-label">Условия</div>
-                <h2 class="section-title">Условия обучения</h2>
-                <p class="section-subtitle">Выберите подходящий формат и длительность курса</p>
+                <h2 class="section-title">Корпоративное обучение</h2>
+                <p class="section-subtitle">Формат, предназначенный для компаний, которые заинтересованы в улучшении навыков своего отдела подбора</p>
             </div>
 
             <div class="pricing-toggle reveal">
@@ -2389,85 +2397,97 @@
                 <button class="pricing-toggle-btn" onclick="switchPricing('online')">Онлайн</button>
             </div>
 
+            <!-- ===== ОЧНОЕ ОБУЧЕНИЕ ===== -->
             <div class="pricing-grid" id="pricingOffline">
-                <div class="pricing-card featured reveal reveal-delay-1">
+
+                <!-- 2. 5-дневный -->
+                <div class="pricing-card featured reveal reveal-delay-2">
                     <div class="pricing-popular">Популярный</div>
                     <div class="pricing-card-body">
                         <h3>5-дневный курс</h3>
-                        <p class="duration">40 часов обучения</p>
+                        <p class="duration">40 часов</p>
                         <div class="card-description">
-                            Интенсивный курс с фокусом на базовые навыки в рекрутменте и практику на реальных вакансиях вашей компании.
+                            Интенсивный курс с фокусом на базовые навыки в рекрутменте и практику на реальных вакансиях.
                         </div>
                         <ul class="pricing-features">
                             <li><span class="check">✓</span> 5 дней очного обучения</li>
                             <li><span class="check">✓</span> Практика на реальных вакансиях</li>
                             <li><span class="check">✓</span> Рабочие материалы</li>
                             <li><span class="check">✓</span> Аудит процессов отдела подбора</li>
-                            <li><span class="check">✓</span> 5 онлайн-консультаций (3 месяца)</li>
+                            <li><span class="check">✓</span> 12 онлайн-консультаций (6 месяцев)</li>
                         </ul>
-                        <div class="priceprice">Стоимость обучения: 320 000 руб <br> <div class="pr">+ расходы на проезд и проживание</div></div>
+                        <div class="priceprice">320 000 руб <br> <div class="pr">+ расходы на проезд и проживание</div></div>
                     </div>
                     <div class="pricing-card-footer">
                         <a href="#form" class="btn-pricing btn-pricing-filled">Оставить заявку</a>
                     </div>
                 </div>
-                <div class="pricing-card reveal reveal-delay-1">
+
+                <!-- 3. 10-дневный -->
+                <div class="pricing-card reveal reveal-delay-3">
                     <div class="pricing-card-body">
                         <h3>10-дневный курс</h3>
-                        <p class="duration">80 часов • Больше практики и закрепление навыков</p>
+                        <p class="duration">80 часов</p>
                         <div class="card-description">
-                            Расширенная программа с углублённой практикой и долгосрочной поддержкой после обучения.
+                            Расширенная программа с углублённой практикой и долгосрочной поддержкой.
                         </div>
                         <ul class="pricing-features">
                             <li><span class="check">✓</span> 10 дней очного обучения</li>
                             <li><span class="check">✓</span> Закрепление навыков на практике</li>
                             <li><span class="check">✓</span> Рабочие материалы</li>
                             <li><span class="check">✓</span> Аудит процессов отдела подбора</li>
-                            <li><span class="check">✓</span> 5 онлайн-консультаций (3 месяца)</li>
+                            <li><span class="check">✓</span> 12 онлайн-консультаций (6 месяцев)</li>
                         </ul>
-                        <div class="priceprice">Стоимость обучения: 480 000 руб <br> <div class="pri">+ расходы на проезд и проживание</div></div>
+                        <div class="priceprice">480 000 руб <br> <div class="pri">+ расходы на проезд и проживание</div></div>
                     </div>
                     <div class="pricing-card-footer">
-                        <a href="#form" class="btn-pricing btn-pricing-outline ">Оставить заявку</a>
+                        <a href="#form" class="btn-pricing btn-pricing-outline">Оставить заявку</a>
                     </div>
                 </div>
             </div>
 
+            <!-- ===== ОНЛАЙН ОБУЧЕНИЕ ===== -->
             <div class="pricing-grid" id="pricingOnline" style="display:none;">
-                <div class="pricing-card featured reveal reveal-delay-1">
+
+                <!-- 2. 5-дневный онлайн -->
+                <div class="pricing-card featured reveal reveal-delay-2">
                     <div class="pricing-popular">Популярный</div>
                     <div class="pricing-card-body">
-                        <h3>5-дневный онлайн-курс</h3>
-                        <p class="duration">10 часов • Команда до 5 человек</p>
+                        <h3>5-дневный курс</h3>
+                        <p class="duration">10 часов • до 5 чел.</p>
                         <div class="card-description">
-                            Компактный онлайн-курс для небольшой команды. Каждое занятие — 2 часа практической работы.
+                            Компактный онлайн-курс для небольшой команды. Каждое занятие — 2 часа практики.
                         </div>
                         <ul class="pricing-features">
                             <li><span class="check">✓</span> 5 занятий по 2 часа</li>
                             <li><span class="check">✓</span> До 5 участников</li>
                             <li><span class="check">✓</span> Рабочие материалы</li>
                             <li><span class="check">✓</span> Экспресс-аудит процессов</li>
+                            <li><span class="check">✓</span> 6 дополнительных консультаций в течение 3-х месяцев</li>
                         </ul>
-                        <div class="priceprice">Стоимость обучения: 80 000 руб </div>
+                        <div class="priceprice">80 000 руб</div>
                     </div>
                     <div class="pricing-card-footer">
                         <a href="#form" class="btn-pricing btn-pricing-filled">Оставить заявку</a>
                     </div>
                 </div>
-                <div class="pricing-card reveal reveal-delay-2">
+
+                <!-- 3. 10-дневный онлайн -->
+                <div class="pricing-card reveal reveal-delay-3">
                     <div class="pricing-card-body">
-                        <h3>10-дневный онлайн-курс</h3>
-                        <p class="duration">20 часов • Команда до 10 человек</p>
+                        <h3>10-дневный курс</h3>
+                        <p class="duration">20 часов • до 10 чел.</p>
                         <div class="card-description">
-                            Полноценная онлайн-программа для команды. Глубокое погружение с рекомендациями по улучшению текущей работы.
+                            Полноценная онлайн-программа для команды. Глубокое погружение с рекомендациями.
                         </div>
                         <ul class="pricing-features">
                             <li><span class="check">✓</span> 10 занятий по 2 часа</li>
                             <li><span class="check">✓</span> До 10 участников</li>
                             <li><span class="check">✓</span> Рабочие материалы</li>
                             <li><span class="check">✓</span> Экспресс-аудит процессов</li>
+                            <li><span class="check">✓</span> 6 дополнительных консультаций в течение 3-х месяцев</li>
                         </ul>
-                        <div class="priceprice">Стоимость обучения: 120 000 руб</div>
+                        <div class="priceprice">120 000 руб</div>
                     </div>
                     <div class="pricing-card-footer">
                         <a href="#form" class="btn-pricing btn-pricing-outline">Оставить заявку</a>
@@ -2476,35 +2496,62 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Additional -->
     <section class="additional">
         <div class="container">
-            <div class="additional-grid">
-                <div class="additional-card reveal">
-                    <h3><span><img src="image/spisok.png" alt=""></span> Дополнительно (очное)</h3>
-                    <ul>
-                        <li>Аудит текущих процессов отдела подбора с отчётом и конкретными рекомендациями</li>
-                        <li>5 часовых онлайн-консультаций в течение 3-х месяцев после обучения</li>
-                        <li>Рабочие материалы: ключевая информация, формы обсуждения заявок, примеры писем</li>
-                    </ul>
-                </div>
-                <div class="additional-card reveal reveal-delay-1">
-                    <h3><span><img src="image/notebook.png" alt=""></span>  Дополнительно (онлайн)</h3>
-                    <ul>
-                        <li>Экспресс-аудит текущих процессов с рекомендациями по улучшению</li>
-                        <li>Рабочие материалы: ключевая информация, формы обсуждения заявок, примеры писем</li>
-                    </ul>
-                </div>
+            <div class="pricing-header reveal">
+                <div class="section-label">Условия</div>
+                <h2 class="section-title">Индивидуальное обучение</h2>
+                <p class="section-subtitle">Выберите подходящий формат и длительность курса</p>
             </div>
 
-            <div class="download-section">
-                <a href="usloviya.pdf" target="_blank" download class="btn-download">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Ознакомиться с предварительными условиями
-                </a>
-                <p>Итоговая стоимость обучения формируется <br>с учётом выбранного формата и региона проведения</p>
-            </div>
+            <!-- ===== ОЧНОЕ ОБУЧЕНИЕ ===== -->
+            <div class="pricing-grid" id="pricingOffline">
+                <!-- 1. Индивидуальное -->
+                <div class="pricing-card featured reveal reveal-delay-2">
+                    <div class="pricing-popular">Популярный</div>
+                    <div class="pricing-card-body">
+                        <h3>Индивидуальное <br>обучение</h3>
+                        <p class="duration">10 встреч + 12 консультаций</p>
+                        <div class="card-description">
+                            Персональный курс с глубоким погружением в процесс подбора персонала
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> 10 онлайн-встреч </li>
+                            <li><span class="check">✓</span> 12 дополнительных консультаций в течение 6 месяцев</li>
+                            <li><span class="check">✓</span> Рабочие материалы</li>
+                            <li><span class="check">✓</span> 10 блоков обучения</li>
+                        </ul>
+                        <div class="priceprice">50 000 руб</div>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <a href="#form" class="btn-pricing btn-pricing-filled">Оставить заявку</a>
+                    </div>
+                </div>
+
+                <div class="pricing-card reveal reveal-delay-1">
+                    
+                    <div class="pricing-card-body">
+                        <h3>Индивидуальное<br>экспресс-обучение</h3>
+                        <p class="duration">5 встреч + 6 консультаций</p>
+                        <div class="card-description">
+                            Персональный экспресс-курс с глубоким погружением в процесс подбора персонала
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> 5 онлайн-встреч </li>
+                            <li><span class="check">✓</span> 6 дополнительных консультаций в течение 6 месяцев</li>
+                            <li><span class="check">✓</span> Рабочие материалы</li>
+                            <li><span class="check">✓</span> 5 блоков обучения</li>
+                        </ul>
+                        <div class="priceprice">25 000 руб</div>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <a href="#form" class="btn-pricing btn-pricing-outline">Оставить заявку</a>
+                    </div>
+                </div>
+
+                
         </div>
     </section>
 
@@ -2605,53 +2652,68 @@
                 
                 <div class="form-card reveal">
                     <h3 style="text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; color: var(--text-dark);">
-                        Заявка на услугу «Обучение рекрутеров на практике»
+                        Заявка на обучение рекрутеров
                     </h3>
                     
-                    <form action="https://formspree.io/f/mlgvrpdy" method="POST" id="contactForm">
+                    <form action="https://formspree.io/f/mlgvrpdy" method="POST" id="contactForm" novalidate>
                         <div class="form-grid">
-                            <!-- 1. Название компании -->
-                            <div class="form-group">
+                            <!-- 1. Тип обучения -->
+                            <div class="form-group full-width">
+                                <span class="radio-group-label">Тип обучения <span class="required">*</span></span>
+                                <div class="radio-options">
+                                    <div class="radio-option">
+                                        <input type="radio" id="type_corporate" name="Тип обучения" value="Корпоративное" checked onchange="toggleTrainingType()">
+                                        <label for="type_corporate">Корпоративное</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="type_individual" name="Тип обучения" value="Индивидуальное" onchange="toggleTrainingType()">
+                                        <label for="type_individual">Индивидуальное</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Название компании -->
+                            <div class="form-group" id="companyField">
                                 <label>Название компании <span class="required">*</span></label>
-                                <input type="text" class="form-input" name="Название компании" placeholder="ООО «Пример»" required>
+                                <input type="text" class="form-input" id="companyName" name="Название компании" placeholder="ООО «Пример»" required>
                             </div>
 
-                            <!-- 2. Сайт компании -->
-                            <div class="form-group">
+                            <!-- 3. Сайт компании -->
+                            <div class="form-group" id="siteField">
                                 <label>Сайт компании</label>
-                                <input type="url" class="form-input" name="Сайт компании" placeholder="www.example.com">
+                                <input type="url" class="form-input" id="companySite" name="Сайт компании" placeholder="www.example.com">
                             </div>
 
-                            <!-- 3. Город -->
+                            <!-- 4. Город -->
                             <div class="form-group">
                                 <label>Город проведения <span class="required">*</span></label>
-                                <input type="text" class="form-input" name="Город" placeholder="Москва" required>
+                                <input type="text" class="form-input" id="city" name="Город" placeholder="Москва" required>
                             </div>
 
-                            <!-- 4. Численность отдела -->
-                            <div class="form-group">
+                            <!-- 5. Численность отдела -->
+                            <div class="form-group" id="departmentField">
                                 <label>Численность отдела подбора</label>
-                                <input type="text" class="form-input" name="Численность отдела подбора" placeholder="Например: 3 человека">
+                                <input type="text" class="form-input" id="departmentSize" name="Численность отдела подбора" placeholder="Например: 3 человека">
                             </div>
 
-                            <!-- 5. ФИО -->
+                            <!-- 6. ФИО -->
                             <div class="form-group full-width">
                                 <label>ФИО контактного лица <span class="required">*</span></label>
-                                <input type="text" class="form-input" name="ФИО контактного лица" placeholder="Иванов Иван Иванович" required>
+                                <input type="text" class="form-input" id="fullName" name="ФИО контактного лица" placeholder="Иванов Иван Иванович" required>
                             </div>
 
-                            <!-- 5. Контакты (Телефон и Почта) -->
+                            <!-- 7. Контакты -->
                             <div class="form-group">
                                 <label>Телефон <span class="required">*</span></label>
-                                <input type="tel" class="form-input" name="Телефон" placeholder="+7 (999) 000-00-00" required>
+                                <input type="tel" class="form-input" id="phone" name="Телефон" placeholder="+7 (999) 000-00-00" required>
                             </div>
                             <div class="form-group">
                                 <label>Электронная почта <span class="required">*</span></label>
-                                <input type="email" class="form-input" name="Почта" placeholder="ivan@company.com" required>
+                                <input type="email" class="form-input" id="email" name="Почта" placeholder="ivan@company.com" required>
                             </div>
 
-                            <!-- 6. Формат обучения (Выбор) -->
-                            <div class="form-group full-width">
+                            <!-- 8. Формат обучения -->
+                            <div class="form-group full-width" id="formatField">
                                 <span class="radio-group-label">Формат обучения</span>
                                 <div class="radio-options">
                                     <div class="radio-option">
@@ -2665,8 +2727,8 @@
                                 </div>
                             </div>
 
-                            <!-- 7. Продолжительность (Выбор) -->
-                            <div class="form-group full-width">
+                            <!-- 9. Продолжительность (корпоративное) -->
+                            <div class="form-group full-width" id="durationCorporate">
                                 <span class="radio-group-label">Продолжительность обучения</span>
                                 <div class="radio-options">
                                     <div class="radio-option">
@@ -2680,29 +2742,45 @@
                                 </div>
                             </div>
 
-                            <!-- 8. Сроки (КАЛЕНДАРЬ ОТ/ДО) -->
+                            <!-- 10. Продолжительность (индивидуальное) -->
+                            <div class="form-group full-width" id="durationIndividual" style="display:none;">
+                                <span class="radio-group-label">Продолжительность обучения</span>
+                                <div class="radio-options">
+                                    <div class="radio-option">
+                                        <input type="radio" id="indiv_full" name="Продолжительность обучения" value="10 встреч (полное)" checked>
+                                        <label for="indiv_full">10 встреч (полное)</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="indiv_express" name="Продолжительность обучения" value="5 встреч (экспресс)">
+                                        <label for="indiv_express">5 встреч (экспресс)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 11. Дата -->
                             <div class="form-group full-width">
                                 <label>Предпочтительная дата начала обучения</label>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                                     <div>
-                                        <input type="date" class="form-input date-input" name="Примерная дата начала обучения" id="date_start" required>
+                                        <input type="date" class="form-input date-input" name="Примерная дата начала обучения" id="dateStart">
                                     </div>
                                 </div>
-                                <span class="date-range-hint">Выберите дату начала обучения</span>
+                                <span class="date-range-hint">Выберите дату начала обучения (необязательно)</span>
                             </div>
 
+                            <!-- 12. Комментарии -->
                             <div class="form-group full-width">
                                 <label>Дополнительные комментарии</label>
-                                <div >
-                                    <div>
-                                        <input type="text" class="form-input" name="Доп. комментарии" id="comms" placeholder="Ваши комментарии">
-                                    </div>
+                                <div>
+                                    <input type="text" class="form-input" name="Доп. комментарии" id="comments" placeholder="Укажите дополнительные пожелания или вопросы">
                                 </div>
                             </div>
                             
+                            <!-- Скрытое поле для отслеживания типа -->
+                            <input type="hidden" name="Тип заявки" id="hiddenTrainingType" value="Корпоративное">
                         </div>
 
-                        <button type="submit" class="btn-submit">
+                        <button type="submit" class="btn-submit" id="submitBtn">
                             Отправить заявку →
                         </button>
                         <p class="form-disclaimer">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
@@ -3012,6 +3090,370 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
         closeAboutModal();
     }
+});
+
+// ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ КОРПОРАТИВНЫМ И ИНДИВИДУАЛЬНЫМ В ФОРМЕ =====
+function toggleTrainingType() {
+    const isCorporate = document.getElementById('type_corporate').checked;
+    const companyField = document.getElementById('companyField');
+    const siteField = document.getElementById('siteField');
+    const departmentField = document.getElementById('departmentField');
+    const formatField = document.getElementById('formatField');
+    const durationCorporate = document.getElementById('durationCorporate');
+    const durationIndividual = document.getElementById('durationIndividual');
+    const hiddenField = document.getElementById('hiddenTrainingType');
+    const dateInput = document.getElementById('dateStart');
+    const formatOffline = document.getElementById('format_offline');
+    const formatOnline = document.getElementById('format_online');
+    
+    if (isCorporate) {
+        companyField.style.display = 'block';
+        siteField.style.display = 'block';
+        departmentField.style.display = 'block';
+        formatField.style.display = 'block';
+        durationCorporate.style.display = 'block';
+        durationIndividual.style.display = 'none';
+        hiddenField.value = 'Корпоративное';
+        
+        // Название компании обязательно
+        document.getElementById('companyName').required = true;
+        
+        // Дата становится обязательной
+        dateInput.required = true;
+        dateInput.parentElement.parentElement.querySelector('.date-range-hint').textContent = 'Выберите дату начала обучения (обязательно)';
+        
+        // Восстанавливаем радиокнопки формата
+        formatOffline.disabled = false;
+        formatOnline.disabled = false;
+    } else {
+        companyField.style.display = 'none';
+        siteField.style.display = 'none';
+        departmentField.style.display = 'none';
+        formatField.style.display = 'none';
+        durationCorporate.style.display = 'none';
+        durationIndividual.style.display = 'block';
+        hiddenField.value = 'Индивидуальное';
+        
+        // Название компании не обязательно
+        document.getElementById('companyName').required = false;
+        
+        // Дата становится необязательной
+        dateInput.required = false;
+        dateInput.parentElement.parentElement.querySelector('.date-range-hint').textContent = 'Выберите дату начала обучения (необязательно)';
+        
+        // Для индивидуального всегда онлайн
+        formatOnline.checked = true;
+        formatOffline.disabled = true;
+        formatOnline.disabled = true;
+    }
+}
+
+// ===== АВТОФОРМАТИРОВАНИЕ ПОЛЕЙ =====
+function formatNameField(input) {
+    // ФИО: каждое слово с заглавной буквы
+    let value = input.value.trim();
+    value = value.replace(/\s+/g, ' ');
+    value = value.split(' ').map(word => {
+        if (word.length > 0) {
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }
+        return '';
+    }).join(' ');
+    input.value = value;
+}
+
+function formatCityField(input) {
+    // Город: первая буква заглавная, остальные строчные
+    let value = input.value.trim();
+    value = value.replace(/\s+/g, ' ');
+    if (value.length > 0) {
+        value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    }
+    input.value = value;
+}
+
+function formatCompanyField(input) {
+    // Название компании: каждое слово с заглавной
+    let value = input.value.trim();
+    value = value.replace(/\s+/g, ' ');
+    value = value.split(' ').map(word => {
+        if (word.length > 0) {
+            // Оставляем в верхнем регистре аббревиатуры (ООО, ЗАО, ОАО, ИП и т.д.)
+            const upperWords = ['ООО', 'ЗАО', 'ОАО', 'ПАО', 'АО', 'ИП', 'ТОО', 'НКО', 'ФГУП', 'ГУП', 'МУП'];
+            const upper = word.toUpperCase();
+            if (upperWords.includes(upper)) {
+                return upper;
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }
+        return '';
+    }).join(' ');
+    input.value = value;
+}
+
+function formatPhoneField(input) {
+    // Маска телефона: +7 (XXX) XXX-XX-XX
+    let value = input.value.replace(/\D/g, '');
+    
+    // Удаляем первый символ если это 7 или 8 (для единообразия оставляем 7)
+    if (value.startsWith('7') || value.startsWith('8')) {
+        value = value.substring(1);
+    }
+    
+    let formatted = '+7';
+    
+    if (value.length > 0) {
+        formatted += ' (' + value.substring(0, 3);
+    }
+    if (value.length >= 3) {
+        formatted += ') ' + value.substring(3, 6);
+    }
+    if (value.length >= 6) {
+        formatted += '-' + value.substring(6, 8);
+    }
+    if (value.length >= 8) {
+        formatted += '-' + value.substring(8, 10);
+    }
+    
+    input.value = formatted;
+}
+
+function validateEmail(input) {
+    // Проверка email
+    const value = input.value.trim();
+    if (value && !value.includes('@')) {
+        input.style.borderColor = '#f44336';
+        return false;
+    }
+    input.style.borderColor = '';
+    return true;
+}
+
+// ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Устанавливаем минимальную дату на сегодня
+    const dateInput = document.getElementById('dateStart');
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+    }
+    
+    // ФИО
+    const fullNameInput = document.getElementById('fullName');
+    if (fullNameInput) {
+        fullNameInput.addEventListener('blur', function() {
+            formatNameField(this);
+        });
+        fullNameInput.addEventListener('input', function() {
+            // Сбрасываем красную рамку при вводе
+            this.style.borderColor = '';
+        });
+    }
+    
+    // Город
+    const cityInput = document.getElementById('city');
+    if (cityInput) {
+        cityInput.addEventListener('blur', function() {
+            formatCityField(this);
+        });
+        cityInput.addEventListener('input', function() {
+            this.style.borderColor = '';
+        });
+    }
+    
+    // Название компании
+    const companyInput = document.getElementById('companyName');
+    if (companyInput) {
+        companyInput.addEventListener('blur', function() {
+            formatCompanyField(this);
+        });
+        companyInput.addEventListener('input', function() {
+            this.style.borderColor = '';
+        });
+    }
+    
+    // Телефон
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            formatPhoneField(this);
+            this.style.borderColor = '';
+        });
+        phoneInput.addEventListener('blur', function() {
+            if (this.value.replace(/\D/g, '').length < 10) {
+                this.style.borderColor = '#f44336';
+            } else {
+                this.style.borderColor = '';
+            }
+        });
+    }
+    
+    // Email
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+            validateEmail(this);
+        });
+        emailInput.addEventListener('input', function() {
+            this.style.borderColor = '';
+        });
+    }
+    
+    // ===== ТОЛЬКО ЦИФРЫ ДЛЯ ЧИСЛЕННОСТИ ОТДЕЛА =====
+    const departmentInput = document.getElementById('departmentSize');
+    if (departmentInput) {
+        departmentInput.addEventListener('input', function() {
+            // Удаляем все не-цифры
+            this.value = this.value.replace(/\D/g, '');
+            this.style.borderColor = '';
+        });
+        
+        departmentInput.addEventListener('blur', function() {
+            // Если поле не пустое и значение больше 0
+            if (this.value && parseInt(this.value) > 0) {
+                this.style.borderColor = '';
+            } else if (this.value) {
+                this.style.borderColor = '#f44336';
+            }
+        });
+    }
+});
+
+// ===== ОБРАБОТКА ОТПРАВКИ ФОРМЫ =====
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Валидация перед отправкой
+    const form = e.target;
+    let isValid = true;
+    let errorMessage = 'Пожалуйста, исправьте следующие ошибки:\n\n';
+    let errors = [];
+    
+    // Проверяем ФИО
+    const fullName = document.getElementById('fullName');
+    if (fullName.value.trim().length < 2) {
+        fullName.style.borderColor = '#f44336';
+        errors.push('• ФИО (минимум 2 символа)');
+        isValid = false;
+    } else {
+        fullName.style.borderColor = '';
+    }
+    
+    // Проверяем телефон
+    const phone = document.getElementById('phone');
+    const phoneDigits = phone.value.replace(/\D/g, '');
+    if (phoneDigits.length < 10) {
+        phone.style.borderColor = '#f44336';
+        errors.push('• Телефон (не менее 10 цифр)');
+        isValid = false;
+    } else {
+        phone.style.borderColor = '';
+    }
+    
+    // Проверяем email
+    const email = document.getElementById('email');
+    if (!email.value.includes('@') || email.value.trim().length < 3) {
+        email.style.borderColor = '#f44336';
+        errors.push('• Email (неверный формат)');
+        isValid = false;
+    } else {
+        email.style.borderColor = '';
+    }
+    
+    // Проверяем город
+    const city = document.getElementById('city');
+    if (city.value.trim().length < 2) {
+        city.style.borderColor = '#f44336';
+        errors.push('• Город (минимум 2 символа)');
+        isValid = false;
+    } else {
+        city.style.borderColor = '';
+    }
+    
+    // Проверяем компанию (если корпоративное)
+    const isCorporate = document.getElementById('type_corporate').checked;
+    if (isCorporate) {
+        const company = document.getElementById('companyName');
+        if (company.value.trim().length < 2) {
+            company.style.borderColor = '#f44336';
+            errors.push('• Название компании (минимум 2 символа)');
+            isValid = false;
+        } else {
+            company.style.borderColor = '';
+        }
+        
+        // Проверяем численность отдела (только цифры)
+        const department = document.getElementById('departmentSize');
+        if (department.value && isNaN(parseInt(department.value))) {
+            department.style.borderColor = '#f44336';
+            errors.push('• Численность отдела (только цифры)');
+            isValid = false;
+        } else if (department.value && parseInt(department.value) <= 0) {
+            department.style.borderColor = '#f44336';
+            errors.push('• Численность отдела (должна быть больше 0)');
+            isValid = false;
+        } else {
+            department.style.borderColor = '';
+        }
+    }
+    
+    if (!isValid) {
+        alert(errorMessage + errors.join('\n'));
+        return;
+    }
+    
+    // Автоформатирование перед отправкой
+    formatNameField(fullName);
+    formatCityField(city);
+    if (isCorporate) {
+        formatCompanyField(document.getElementById('companyName'));
+    }
+    
+    const data = new FormData(form);
+    
+    // Добавляем скрытое поле с типом
+    data.set('Тип заявки', document.getElementById('hiddenTrainingType').value);
+    
+    // Показываем кнопку отправки как загруженную
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.textContent = 'Отправка...';
+    submitBtn.disabled = true;
+    
+    fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+    }).then(response => {
+        if (response.ok) {
+            ym(109674750, 'reachGoal', 'form_success');
+            ym(109674750, 'reachGoal', 'click_apply');
+            
+            // Скрываем форму и показываем успех
+            form.style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Очищаем все поля
+            form.reset();
+            
+            // Восстанавливаем радиокнопки формата
+            document.getElementById('format_offline').disabled = false;
+            document.getElementById('format_online').disabled = false;
+            document.getElementById('format_offline').checked = true;
+            
+            // Сбрасываем стили
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.style.borderColor = '';
+            });
+        } else {
+            alert('Ошибка отправки. Попробуйте позже.');
+            submitBtn.textContent = 'Отправить заявку →';
+            submitBtn.disabled = false;
+        }
+    }).catch(() => {
+        alert('Проверьте подключение к интернету.');
+        submitBtn.textContent = 'Отправить заявку →';
+        submitBtn.disabled = false;
+    });
 });
     </script>
 
