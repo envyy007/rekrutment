@@ -1668,6 +1668,13 @@
             overflow: hidden;
         }
 
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
         .btn-submit::before {
             content: '';
             position: absolute;
@@ -1679,11 +1686,11 @@
             transition: left 0.5s;
         }
 
-        .btn-submit:hover::before {
+        .btn-submit:hover:not(:disabled)::before {
             left: 100%;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 12px 40px rgba(26,43,76,0.4);
         }
@@ -2389,7 +2396,7 @@
             <div class="pricing-header reveal">
                 <div class="section-label">Условия</div>
                 <h2 class="section-title">Корпоративное обучение</h2>
-                <p class="section-subtitle">Формат, предназначенный для компаний, заинтересованных в профессиональном развитии отдела подбора персонала</p>
+                <p class="section-subtitle">Формат, предназначенный для компаний, которые заинтересованы в улучшении навыков своего отдела подбора</p>
             </div>
 
             <div class="pricing-toggle reveal">
@@ -2778,9 +2785,18 @@
                             
                             <!-- Скрытое поле для отслеживания типа -->
                             <input type="hidden" name="Тип заявки" id="hiddenTrainingType" value="Корпоративное">
+
+                            <!-- ===== ЗАЩИТА ОТ СПАМА ===== -->
+                            <!-- Honeypot поле для ботов -->
+                            <div style="display: none;">
+                                <input type="text" name="_gotcha" id="gotcha" tabindex="-1" autocomplete="off">
+                            </div>
+                            <!-- Включаем защиту Formspree -->
+                            <input type="hidden" name="_captcha" value="true">
+                            <input type="hidden" name="_spamshield" value="true">
                         </div>
 
-                        <button type="submit" class="btn-submit" id="submitBtn">
+                        <button type="submit" class="btn-submit" id="submitBtn" disabled>
                             Отправить заявку →
                         </button>
                         <p class="form-disclaimer">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
@@ -3027,437 +3043,440 @@
         });
 
 
+        // ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ КОРПОРАТИВНЫМ И ИНДИВИДУАЛЬНЫМ В ФОРМЕ =====
+        function toggleTrainingType() {
+            const isCorporate = document.getElementById('type_corporate').checked;
+            const companyField = document.getElementById('companyField');
+            const siteField = document.getElementById('siteField');
+            const departmentField = document.getElementById('departmentField');
+            const formatField = document.getElementById('formatField');
+            const durationCorporate = document.getElementById('durationCorporate');
+            const durationIndividual = document.getElementById('durationIndividual');
+            const hiddenField = document.getElementById('hiddenTrainingType');
+            const dateInput = document.getElementById('dateStart');
+            const formatOffline = document.getElementById('format_offline');
+            const formatOnline = document.getElementById('format_online');
+            
+            if (isCorporate) {
+                companyField.style.display = 'block';
+                siteField.style.display = 'block';
+                departmentField.style.display = 'block';
+                formatField.style.display = 'block';
+                durationCorporate.style.display = 'block';
+                durationIndividual.style.display = 'none';
+                hiddenField.value = 'Корпоративное';
+                
+                document.getElementById('companyName').required = true;
+                dateInput.required = true;
+                dateInput.parentElement.parentElement.querySelector('.date-range-hint').textContent = 'Выберите дату начала обучения (обязательно)';
+                
+                formatOffline.disabled = false;
+                formatOnline.disabled = false;
+            } else {
+                companyField.style.display = 'none';
+                siteField.style.display = 'none';
+                departmentField.style.display = 'none';
+                formatField.style.display = 'none';
+                durationCorporate.style.display = 'none';
+                durationIndividual.style.display = 'block';
+                hiddenField.value = 'Индивидуальное';
+                
+                document.getElementById('companyName').required = false;
+                dateInput.required = false;
+                dateInput.parentElement.parentElement.querySelector('.date-range-hint').textContent = 'Выберите дату начала обучения (необязательно)';
+                
+                formatOnline.checked = true;
+                formatOffline.disabled = true;
+                formatOnline.disabled = true;
+            }
+            
+            // Проверяем валидность формы после переключения
+            checkFormValidity();
+        }
+
+        // ===== АВТОФОРМАТИРОВАНИЕ ПОЛЕЙ =====
+        function formatNameField(input) {
+            let value = input.value.trim();
+            value = value.replace(/\s+/g, ' ');
+            value = value.split(' ').map(word => {
+                if (word.length > 0) {
+                    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                }
+                return '';
+            }).join(' ');
+            input.value = value;
+        }
+
+        function formatCityField(input) {
+            let value = input.value.trim();
+            value = value.replace(/\s+/g, ' ');
+            if (value.length > 0) {
+                value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+            }
+            input.value = value;
+        }
+
+        function formatCompanyField(input) {
+            let value = input.value.trim();
+            value = value.replace(/\s+/g, ' ');
+            value = value.split(' ').map(word => {
+                if (word.length > 0) {
+                    const upperWords = ['ООО', 'ЗАО', 'ОАО', 'ПАО', 'АО', 'ИП', 'ТОО', 'НКО', 'ФГУП', 'ГУП', 'МУП'];
+                    const upper = word.toUpperCase();
+                    if (upperWords.includes(upper)) {
+                        return upper;
+                    }
+                    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                }
+                return '';
+            }).join(' ');
+            input.value = value;
+        }
+
+        function formatPhoneField(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.startsWith('7') || value.startsWith('8')) {
+                value = value.substring(1);
+            }
+            let formatted = '+7';
+            if (value.length > 0) {
+                formatted += ' (' + value.substring(0, 3);
+            }
+            if (value.length >= 3) {
+                formatted += ') ' + value.substring(3, 6);
+            }
+            if (value.length >= 6) {
+                formatted += '-' + value.substring(6, 8);
+            }
+            if (value.length >= 8) {
+                formatted += '-' + value.substring(8, 10);
+            }
+            input.value = formatted;
+        }
+
+        // ===== ПРОВЕРКА ВАЛИДНОСТИ ФОРМЫ (АКТИВАЦИЯ КНОПКИ) =====
+        function checkFormValidity() {
+            const submitBtn = document.getElementById('submitBtn');
+            const fullName = document.getElementById('fullName');
+            const phone = document.getElementById('phone');
+            const email = document.getElementById('email');
+            const city = document.getElementById('city');
+            const isCorporate = document.getElementById('type_corporate').checked;
+            
+            let isValid = true;
+            
+            if (fullName.value.trim().length < 2) isValid = false;
+            if (phone.value.replace(/\D/g, '').length < 10) isValid = false;
+            if (!email.value.includes('@') || email.value.trim().length < 3) isValid = false;
+            if (city.value.trim().length < 2) isValid = false;
+            
+            if (isCorporate) {
+                const company = document.getElementById('companyName');
+                if (company.value.trim().length < 2) isValid = false;
+            }
+            
+            submitBtn.disabled = !isValid;
+            submitBtn.style.opacity = isValid ? '1' : '0.6';
+            submitBtn.style.cursor = isValid ? 'pointer' : 'not-allowed';
+        }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Запоминаем время загрузки формы для anti-spam
+            sessionStorage.setItem('formLoadTime', Date.now());
+            
+            // Устанавливаем минимальную дату на сегодня
+            const dateInput = document.getElementById('dateStart');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+                dateInput.addEventListener('change', checkFormValidity);
+            }
+            
+            // ФИО
+            const fullNameInput = document.getElementById('fullName');
+            if (fullNameInput) {
+                fullNameInput.addEventListener('blur', function() {
+                    formatNameField(this);
+                    checkFormValidity();
+                });
+                fullNameInput.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                    checkFormValidity();
+                });
+            }
+            
+            // Город
+            const cityInput = document.getElementById('city');
+            if (cityInput) {
+                cityInput.addEventListener('blur', function() {
+                    formatCityField(this);
+                    checkFormValidity();
+                });
+                cityInput.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                    checkFormValidity();
+                });
+            }
+            
+            // Название компании
+            const companyInput = document.getElementById('companyName');
+            if (companyInput) {
+                companyInput.addEventListener('blur', function() {
+                    formatCompanyField(this);
+                    checkFormValidity();
+                });
+                companyInput.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                    checkFormValidity();
+                });
+            }
+            
+            // Телефон
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function() {
+                    formatPhoneField(this);
+                    this.style.borderColor = '';
+                    checkFormValidity();
+                });
+                phoneInput.addEventListener('blur', function() {
+                    if (this.value.replace(/\D/g, '').length < 10) {
+                        this.style.borderColor = '#f44336';
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                    checkFormValidity();
+                });
+            }
+            
+            // Email
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                emailInput.addEventListener('blur', function() {
+                    if (!this.value.includes('@') || this.value.trim().length < 3) {
+                        this.style.borderColor = '#f44336';
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                    checkFormValidity();
+                });
+                emailInput.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                    checkFormValidity();
+                });
+            }
+            
+            // Только цифры для численности
+            const departmentInput = document.getElementById('departmentSize');
+            if (departmentInput) {
+                departmentInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/\D/g, '');
+                    this.style.borderColor = '';
+                    checkFormValidity();
+                });
+                departmentInput.addEventListener('blur', function() {
+                    if (this.value && parseInt(this.value) > 0) {
+                        this.style.borderColor = '';
+                    } else if (this.value) {
+                        this.style.borderColor = '#f44336';
+                    }
+                    checkFormValidity();
+                });
+            }
+            
+            // Радиокнопки
+            document.querySelectorAll('input[name="Тип обучения"]').forEach(radio => {
+                radio.addEventListener('change', checkFormValidity);
+            });
+            document.querySelectorAll('input[name="Формат"]').forEach(radio => {
+                radio.addEventListener('change', checkFormValidity);
+            });
+            document.querySelectorAll('input[name="Продолжительность обучения"]').forEach(radio => {
+                radio.addEventListener('change', checkFormValidity);
+            });
+            
+            // Первоначальная проверка
+            setTimeout(checkFormValidity, 100);
+        });
+
+        // ===== ОБРАБОТКА ОТПРАВКИ ФОРМЫ =====
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // === 1. ANTI-SPAM: Honeypot проверка ===
+            const gotcha = document.getElementById('gotcha');
+            if (gotcha && gotcha.value !== '') {
+                // Бот заполнил скрытое поле — молча игнорируем
+                return;
+            }
+            
+            // === 2. ANTI-SPAM: Проверка времени заполнения ===
+            const formLoadTime = parseInt(sessionStorage.getItem('formLoadTime')) || Date.now();
+            const timeSpent = Date.now() - formLoadTime;
+            if (timeSpent < 3000) {
+                alert('⏱️ Пожалуйста, заполните форму внимательно. Слишком быстрая отправка.');
+                return;
+            }
+            
+            // === 3. ВАЛИДАЦИЯ ===
             const form = e.target;
+            let isValid = true;
+            let errors = [];
+            
+            const fullName = document.getElementById('fullName');
+            const phone = document.getElementById('phone');
+            const email = document.getElementById('email');
+            const city = document.getElementById('city');
+            const isCorporate = document.getElementById('type_corporate').checked;
+            
+            // ФИО
+            if (fullName.value.trim().length < 2) {
+                fullName.style.borderColor = '#f44336';
+                errors.push('• ФИО (минимум 2 символа)');
+                isValid = false;
+            } else {
+                fullName.style.borderColor = '';
+            }
+            
+            // Телефон
+            const phoneDigits = phone.value.replace(/\D/g, '');
+            if (phoneDigits.length < 10) {
+                phone.style.borderColor = '#f44336';
+                errors.push('• Телефон (не менее 10 цифр)');
+                isValid = false;
+            } else {
+                phone.style.borderColor = '';
+            }
+            
+            // Email
+            if (!email.value.includes('@') || email.value.trim().length < 3) {
+                email.style.borderColor = '#f44336';
+                errors.push('• Email (неверный формат)');
+                isValid = false;
+            } else {
+                email.style.borderColor = '';
+            }
+            
+            // Город
+            if (city.value.trim().length < 2) {
+                city.style.borderColor = '#f44336';
+                errors.push('• Город (минимум 2 символа)');
+                isValid = false;
+            } else {
+                city.style.borderColor = '';
+            }
+            
+            // Компания (если корпоративное)
+            if (isCorporate) {
+                const company = document.getElementById('companyName');
+                if (company.value.trim().length < 2) {
+                    company.style.borderColor = '#f44336';
+                    errors.push('• Название компании (минимум 2 символа)');
+                    isValid = false;
+                } else {
+                    company.style.borderColor = '';
+                }
+                
+                const department = document.getElementById('departmentSize');
+                if (department.value && parseInt(department.value) <= 0) {
+                    department.style.borderColor = '#f44336';
+                    errors.push('• Численность отдела (должна быть больше 0)');
+                    isValid = false;
+                } else {
+                    department.style.borderColor = '';
+                }
+            }
+            
+            if (!isValid) {
+                alert('❌ Пожалуйста, исправьте следующие ошибки:\n\n' + errors.join('\n'));
+                return;
+            }
+            
+            // === 4. АВТОФОРМАТИРОВАНИЕ ПЕРЕД ОТПРАВКОЙ ===
+            formatNameField(fullName);
+            formatCityField(city);
+            if (isCorporate) {
+                formatCompanyField(document.getElementById('companyName'));
+            }
+            
+            // === 5. ОТПРАВКА ===
             const data = new FormData(form);
+            data.set('Тип заявки', document.getElementById('hiddenTrainingType').value);
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
             
             fetch(form.action, {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
             }).then(response => {
-            if (response.ok) {
-
-                ym(109674750,'reachGoal','form_success')
-                ym(109674750,'reachGoal','click_apply')
-                
-                form.style.display = 'none';
-                document.getElementById('successMessage').classList.add('show');
-                form.reset();
-            } else {
-                alert('Ошибка отправки. Попробуйте позже.');
-            }
-            }).catch(() => alert('Проверьте подключение к интернету.'));
+                if (response.ok) {
+                    ym(109674750, 'reachGoal', 'form_success');
+                    ym(109674750, 'reachGoal', 'click_apply');
+                    
+                    form.style.display = 'none';
+                    document.getElementById('successMessage').classList.add('show');
+                    form.reset();
+                    
+                    document.getElementById('format_offline').disabled = false;
+                    document.getElementById('format_online').disabled = false;
+                    document.getElementById('format_offline').checked = true;
+                    
+                    document.querySelectorAll('.form-input').forEach(input => {
+                        input.style.borderColor = '';
+                    });
+                } else {
+                    alert('❌ Ошибка отправки. Попробуйте позже.');
+                    submitBtn.textContent = 'Отправить заявку →';
+                    submitBtn.disabled = false;
+                }
+            }).catch(() => {
+                alert('❌ Проверьте подключение к интернету.');
+                submitBtn.textContent = 'Отправить заявку →';
+                submitBtn.disabled = false;
+            });
         });
 
 
 
         // ===== МОДАЛЬНЫЕ ОКНА "ОБ АВТОРЕ" =====
-const aboutModal = document.getElementById('aboutModal');
-const aboutModalBody = document.getElementById('aboutModalBody');
+        const aboutModal = document.getElementById('aboutModal');
+        const aboutModalBody = document.getElementById('aboutModalBody');
 
-function openAboutModal(contentId) {
-    const content = document.getElementById('about-content-' + contentId);
-    if (content) {
-        aboutModalBody.innerHTML = content.innerHTML;
-        
-        // Сбрасываем скролл внутри модального окна
-        const modalScroll = document.querySelector('.about-modal');
-        if (modalScroll) {
-            modalScroll.scrollTop = 0;
-        }
-        
-        aboutModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeAboutModal() {
-    aboutModal.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// Закрытие по клику на затемнённый фон
-aboutModal.addEventListener('click', function(e) {
-    if (e.target === aboutModal) {
-        closeAboutModal();
-    }
-});
-
-// Закрытие по клавише Escape
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
-        closeAboutModal();
-    }
-});
-
-// ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ КОРПОРАТИВНЫМ И ИНДИВИДУАЛЬНЫМ В ФОРМЕ =====
-function toggleTrainingType() {
-    const isCorporate = document.getElementById('type_corporate').checked;
-    const companyField = document.getElementById('companyField');
-    const siteField = document.getElementById('siteField');
-    const departmentField = document.getElementById('departmentField');
-    const formatField = document.getElementById('formatField');
-    const durationCorporate = document.getElementById('durationCorporate');
-    const durationIndividual = document.getElementById('durationIndividual');
-    const hiddenField = document.getElementById('hiddenTrainingType');
-    const dateInput = document.getElementById('dateStart');
-    const formatOffline = document.getElementById('format_offline');
-    const formatOnline = document.getElementById('format_online');
-    
-    if (isCorporate) {
-        companyField.style.display = 'block';
-        siteField.style.display = 'block';
-        departmentField.style.display = 'block';
-        formatField.style.display = 'block';
-        durationCorporate.style.display = 'block';
-        durationIndividual.style.display = 'none';
-        hiddenField.value = 'Корпоративное';
-        
-        // Название компании обязательно
-        document.getElementById('companyName').required = true;
-        
-        // Дата становится обязательной
-        dateInput.required = true;
-        dateInput.parentElement.parentElement.querySelector('.date-range-hint').textContent = 'Выберите дату начала обучения (обязательно)';
-        
-        // Восстанавливаем радиокнопки формата
-        formatOffline.disabled = false;
-        formatOnline.disabled = false;
-    } else {
-        companyField.style.display = 'none';
-        siteField.style.display = 'none';
-        departmentField.style.display = 'none';
-        formatField.style.display = 'none';
-        durationCorporate.style.display = 'none';
-        durationIndividual.style.display = 'block';
-        hiddenField.value = 'Индивидуальное';
-        
-        // Название компании не обязательно
-        document.getElementById('companyName').required = false;
-        
-        // Дата становится необязательной
-        dateInput.required = false;
-        dateInput.parentElement.parentElement.querySelector('.date-range-hint').textContent = 'Выберите дату начала обучения (необязательно)';
-        
-        // Для индивидуального всегда онлайн
-        formatOnline.checked = true;
-        formatOffline.disabled = true;
-        formatOnline.disabled = true;
-    }
-}
-
-// ===== АВТОФОРМАТИРОВАНИЕ ПОЛЕЙ =====
-function formatNameField(input) {
-    // ФИО: каждое слово с заглавной буквы
-    let value = input.value.trim();
-    value = value.replace(/\s+/g, ' ');
-    value = value.split(' ').map(word => {
-        if (word.length > 0) {
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        }
-        return '';
-    }).join(' ');
-    input.value = value;
-}
-
-function formatCityField(input) {
-    // Город: первая буква заглавная, остальные строчные
-    let value = input.value.trim();
-    value = value.replace(/\s+/g, ' ');
-    if (value.length > 0) {
-        value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    }
-    input.value = value;
-}
-
-function formatCompanyField(input) {
-    // Название компании: каждое слово с заглавной
-    let value = input.value.trim();
-    value = value.replace(/\s+/g, ' ');
-    value = value.split(' ').map(word => {
-        if (word.length > 0) {
-            // Оставляем в верхнем регистре аббревиатуры (ООО, ЗАО, ОАО, ИП и т.д.)
-            const upperWords = ['ООО', 'ЗАО', 'ОАО', 'ПАО', 'АО', 'ИП', 'ТОО', 'НКО', 'ФГУП', 'ГУП', 'МУП'];
-            const upper = word.toUpperCase();
-            if (upperWords.includes(upper)) {
-                return upper;
+        function openAboutModal(contentId) {
+            const content = document.getElementById('about-content-' + contentId);
+            if (content) {
+                aboutModalBody.innerHTML = content.innerHTML;
+                
+                const modalScroll = document.querySelector('.about-modal');
+                if (modalScroll) {
+                    modalScroll.scrollTop = 0;
+                }
+                
+                aboutModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
         }
-        return '';
-    }).join(' ');
-    input.value = value;
-}
 
-function formatPhoneField(input) {
-    // Маска телефона: +7 (XXX) XXX-XX-XX
-    let value = input.value.replace(/\D/g, '');
-    
-    // Удаляем первый символ если это 7 или 8 (для единообразия оставляем 7)
-    if (value.startsWith('7') || value.startsWith('8')) {
-        value = value.substring(1);
-    }
-    
-    let formatted = '+7';
-    
-    if (value.length > 0) {
-        formatted += ' (' + value.substring(0, 3);
-    }
-    if (value.length >= 3) {
-        formatted += ') ' + value.substring(3, 6);
-    }
-    if (value.length >= 6) {
-        formatted += '-' + value.substring(6, 8);
-    }
-    if (value.length >= 8) {
-        formatted += '-' + value.substring(8, 10);
-    }
-    
-    input.value = formatted;
-}
+        function closeAboutModal() {
+            aboutModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-function validateEmail(input) {
-    // Проверка email
-    const value = input.value.trim();
-    if (value && !value.includes('@')) {
-        input.style.borderColor = '#f44336';
-        return false;
-    }
-    input.style.borderColor = '';
-    return true;
-}
-
-// ===== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Устанавливаем минимальную дату на сегодня
-    const dateInput = document.getElementById('dateStart');
-    if (dateInput) {
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.min = today;
-    }
-    
-    // ФИО
-    const fullNameInput = document.getElementById('fullName');
-    if (fullNameInput) {
-        fullNameInput.addEventListener('blur', function() {
-            formatNameField(this);
-        });
-        fullNameInput.addEventListener('input', function() {
-            // Сбрасываем красную рамку при вводе
-            this.style.borderColor = '';
-        });
-    }
-    
-    // Город
-    const cityInput = document.getElementById('city');
-    if (cityInput) {
-        cityInput.addEventListener('blur', function() {
-            formatCityField(this);
-        });
-        cityInput.addEventListener('input', function() {
-            this.style.borderColor = '';
-        });
-    }
-    
-    // Название компании
-    const companyInput = document.getElementById('companyName');
-    if (companyInput) {
-        companyInput.addEventListener('blur', function() {
-            formatCompanyField(this);
-        });
-        companyInput.addEventListener('input', function() {
-            this.style.borderColor = '';
-        });
-    }
-    
-    // Телефон
-    const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function() {
-            formatPhoneField(this);
-            this.style.borderColor = '';
-        });
-        phoneInput.addEventListener('blur', function() {
-            if (this.value.replace(/\D/g, '').length < 10) {
-                this.style.borderColor = '#f44336';
-            } else {
-                this.style.borderColor = '';
+        aboutModal.addEventListener('click', function(e) {
+            if (e.target === aboutModal) {
+                closeAboutModal();
             }
         });
-    }
-    
-    // Email
-    const emailInput = document.getElementById('email');
-    if (emailInput) {
-        emailInput.addEventListener('blur', function() {
-            validateEmail(this);
-        });
-        emailInput.addEventListener('input', function() {
-            this.style.borderColor = '';
-        });
-    }
-    
-    // ===== ТОЛЬКО ЦИФРЫ ДЛЯ ЧИСЛЕННОСТИ ОТДЕЛА =====
-    const departmentInput = document.getElementById('departmentSize');
-    if (departmentInput) {
-        departmentInput.addEventListener('input', function() {
-            // Удаляем все не-цифры
-            this.value = this.value.replace(/\D/g, '');
-            this.style.borderColor = '';
-        });
-        
-        departmentInput.addEventListener('blur', function() {
-            // Если поле не пустое и значение больше 0
-            if (this.value && parseInt(this.value) > 0) {
-                this.style.borderColor = '';
-            } else if (this.value) {
-                this.style.borderColor = '#f44336';
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
+                closeAboutModal();
             }
         });
-    }
-});
-
-// ===== ОБРАБОТКА ОТПРАВКИ ФОРМЫ =====
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Валидация перед отправкой
-    const form = e.target;
-    let isValid = true;
-    let errorMessage = 'Пожалуйста, исправьте следующие ошибки:\n\n';
-    let errors = [];
-    
-    // Проверяем ФИО
-    const fullName = document.getElementById('fullName');
-    if (fullName.value.trim().length < 2) {
-        fullName.style.borderColor = '#f44336';
-        errors.push('• ФИО (минимум 2 символа)');
-        isValid = false;
-    } else {
-        fullName.style.borderColor = '';
-    }
-    
-    // Проверяем телефон
-    const phone = document.getElementById('phone');
-    const phoneDigits = phone.value.replace(/\D/g, '');
-    if (phoneDigits.length < 10) {
-        phone.style.borderColor = '#f44336';
-        errors.push('• Телефон (не менее 10 цифр)');
-        isValid = false;
-    } else {
-        phone.style.borderColor = '';
-    }
-    
-    // Проверяем email
-    const email = document.getElementById('email');
-    if (!email.value.includes('@') || email.value.trim().length < 3) {
-        email.style.borderColor = '#f44336';
-        errors.push('• Email (неверный формат)');
-        isValid = false;
-    } else {
-        email.style.borderColor = '';
-    }
-    
-    // Проверяем город
-    const city = document.getElementById('city');
-    if (city.value.trim().length < 2) {
-        city.style.borderColor = '#f44336';
-        errors.push('• Город (минимум 2 символа)');
-        isValid = false;
-    } else {
-        city.style.borderColor = '';
-    }
-    
-    // Проверяем компанию (если корпоративное)
-    const isCorporate = document.getElementById('type_corporate').checked;
-    if (isCorporate) {
-        const company = document.getElementById('companyName');
-        if (company.value.trim().length < 2) {
-            company.style.borderColor = '#f44336';
-            errors.push('• Название компании (минимум 2 символа)');
-            isValid = false;
-        } else {
-            company.style.borderColor = '';
-        }
-        
-        // Проверяем численность отдела (только цифры)
-        const department = document.getElementById('departmentSize');
-        if (department.value && isNaN(parseInt(department.value))) {
-            department.style.borderColor = '#f44336';
-            errors.push('• Численность отдела (только цифры)');
-            isValid = false;
-        } else if (department.value && parseInt(department.value) <= 0) {
-            department.style.borderColor = '#f44336';
-            errors.push('• Численность отдела (должна быть больше 0)');
-            isValid = false;
-        } else {
-            department.style.borderColor = '';
-        }
-    }
-    
-    if (!isValid) {
-        alert(errorMessage + errors.join('\n'));
-        return;
-    }
-    
-    // Автоформатирование перед отправкой
-    formatNameField(fullName);
-    formatCityField(city);
-    if (isCorporate) {
-        formatCompanyField(document.getElementById('companyName'));
-    }
-    
-    const data = new FormData(form);
-    
-    // Добавляем скрытое поле с типом
-    data.set('Тип заявки', document.getElementById('hiddenTrainingType').value);
-    
-    // Показываем кнопку отправки как загруженную
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.textContent = 'Отправка...';
-    submitBtn.disabled = true;
-    
-    fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-    }).then(response => {
-        if (response.ok) {
-            ym(109674750, 'reachGoal', 'form_success');
-            ym(109674750, 'reachGoal', 'click_apply');
-            
-            // Скрываем форму и показываем успех
-            form.style.display = 'none';
-            document.getElementById('successMessage').classList.add('show');
-            
-            // Очищаем все поля
-            form.reset();
-            
-            // Восстанавливаем радиокнопки формата
-            document.getElementById('format_offline').disabled = false;
-            document.getElementById('format_online').disabled = false;
-            document.getElementById('format_offline').checked = true;
-            
-            // Сбрасываем стили
-            document.querySelectorAll('.form-input').forEach(input => {
-                input.style.borderColor = '';
-            });
-        } else {
-            alert('Ошибка отправки. Попробуйте позже.');
-            submitBtn.textContent = 'Отправить заявку →';
-            submitBtn.disabled = false;
-        }
-    }).catch(() => {
-        alert('Проверьте подключение к интернету.');
-        submitBtn.textContent = 'Отправить заявку →';
-        submitBtn.disabled = false;
-    });
-});
     </script>
-
-
-
 </body>
 </html>
