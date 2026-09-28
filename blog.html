@@ -36,8 +36,20 @@
         .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 16px 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .nav.scrolled { background: rgba(26, 43, 76, 0.95); backdrop-filter: blur(20px); padding: 10px 0; box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
         .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { color: #fff; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
-        .nav-logo-icon { width: 36px; height: 36px; background: var(--gradient-accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .nav-logo{
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo img{
+            height: 80px;
+            width: 100%;
+        }
         .nav-links { display: flex; gap: 32px; align-items: center; }
         .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; position: relative; }
         .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s; }
@@ -237,14 +249,14 @@
 
     <nav class="nav" id="nav">
         <div class="nav-inner">
-            <a href="index.html#main"><div class="nav-logo">
-                Рекрутмент с Душой
+            <a href="#main"><div class="nav-logo">
+                <img src="logo.png" alt="Рекрутмент с Душой">
             </div></a>
             <div class="nav-links">
-                <a href="index.html#program">Программа</a>
-                <a href="index.html#pricing">Условия</a>
-                <a href="index.html#about">Об авторе</a>
-                <a href="blog.html">Статьи</a>
+                <a href="index.html#program">Обучение</a>
+                <a href="services.html">Подбор персонала</a>
+                <a href="blog.html">Блог</a>
+                <a href="index.html#contacts">Контакты</a>
             </div>
             <a href="index.html#form" class="nav-cta">Оставить заявку</a>
             <div class="nav-burger" onclick="toggleMobileNav()">
@@ -258,11 +270,11 @@
 
     <div class="mobile-nav" id="mobileNav">
         <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
-        <a href="#program" onclick="toggleMobileNav()">Программа</a>
-        <a href="#pricing" onclick="toggleMobileNav()">Условия</a>
-        <a href="#about" onclick="toggleMobileNav()">Об авторе</a>
-        <a href="blog.html" onclick="toggleMobileNav()">Статьи</a>
-        <a href="#form" class="btn btn-primary" onclick="toggleMobileNav()">Оставить заявку</a>
+        <a href="index.html#program" onclick="toggleMobileNav()">Обучение</a>
+        <a href="services.html" onclick="toggleMobileNav()">Подбор персонала</a>
+        <a href="blog.html" onclick="toggleMobileNav()">Блог</a>
+        <a href="index.html#contacts" onclick="toggleMobileNav()">Контакты</a>
+        <a href="index.html#form" class="btn btn-primary" onclick="toggleMobileNav()">Оставить заявку</a>
     </div>
 
     <section class="blog-hero">
